@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   AnswerVote.associate = function(models) {
     // associations can be defined here
+
   };
   return AnswerVote;
 };
