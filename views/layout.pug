@@ -2,7 +2,27 @@ doctype html
 html
   head
       block head
-        title="Express Starter App"
+        title="Snack Overflow"
         link(rel='stylesheet' href='/stylesheets/reset.css')
   body
+    nav
+      a(href='/') Snack Overflow
+      button(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+        span
+      div
+        ul
+          li(class='nav-item'): a(class='nav-link' href='/questions') Questions
+        ul(class='navbar-nav mr-auto')
+          //- Empty menu keeps the content that follows the
+          //- unordered list correctly positioned on the
+          //- right side of the navbar.
+        if locals.authenticated
+          span(class='navbar-text px-4') Welcome #{user.username}!
+          form(class='form-inline pr-4' action='/users/logout' method='post')
+            button(class='btn btn-sm btn-warning' type='submit') Logout
+        else
+          span(class='navbar-text px-4')
+            a(class='btn btn-sm btn-dark mr-2' href='/users/login') Login
+            a(class='btn btn-sm btn-dark' href='/users/register') Register
+    .container
     block content
