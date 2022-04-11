@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         Comment.belongsTo(models.User, { foreignKey: "userId" });
         Comment.belongsTo(models.Question, { foreignKey: "questionId" });
         Comment.belongsTo(models.Answer, { foreignKey: "answerId" });
-        Comment.belongsToMany(models.Comment, {
+        Comment.belongsToMany(models.User, {
             through: "CommentVote",
             foreignKey: "commentId",
             otherKey: "userId"

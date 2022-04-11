@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     );
     Question.associate = function (models) {
         // associations can be defined here
-        Question.belongsToMany(models.User, { foreignKey: "userId" });
+        Question.belongsTo(models.User, { foreignKey: "userId" });
         Question.hasMany(models.Answer, { foreignKey: "questionId" });
         Question.hasMany(models.Comment, { foreignKey: "questionId" });
 
