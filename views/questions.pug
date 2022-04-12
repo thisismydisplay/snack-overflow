@@ -1,0 +1,21 @@
+extends layout.pug
+block content
+    div.body-content-container
+        .body-header-content
+            .title-container
+                span #{title}
+            .btn-container
+                button Ask Question
+        .question-list-container
+            each question in questions
+                .question-container
+                    .vote-answer-div
+                        .vote-div
+                        .answer-div
+                    .title-content-div
+                        .title-div
+                        .tags-div
+                        .username-content-div
+                            .img-div
+                            span.username-div= `${question.id}`
+                            .modified-div

@@ -1,8 +1,7 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
-        "User",
-        {
+        "User", {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -15,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true,
             },
             hashedPassword: {
-              allowNull: false,
-              type: DataTypes.STRING.BINARY
+                allowNull: false,
+                type: DataTypes.STRING.BINARY,
             },
             email: {
                 allowNull: false,
@@ -31,32 +30,32 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.DATE,
             },
-        },
-        {}
+        }, {}
     );
-    User.associate = function (models) {
+    User.associate = function(models) {
         // associations can be defined here
         User.hasMany(models.Question, { foreignKey: "userId" });
         User.hasMany(models.Answer, { foreignKey: "userId" });
         User.hasMany(models.Comment, { foreignKey: "userId" });
-
+        User.hasMany(models.QuestionVote, { foreignKey: "userId" });
+        User.hasMany(models.AnswerVote, { foreignKey: "answerId" });
+        User.hasMany(models.CommentVote, { foreignKey: "commentId" });
         User.belongsToMany(models.Question, {
-          through: "QuestionVote",
-          otherKey: "questionId",
-          foreignKey: "userId",
-      });
+            through: "QuestionVote",
+            otherKey: "questionId",
+            foreignKey: "userId",
+        });
         User.belongsToMany(models.Answer, {
-          through: "AnswerVote",
-          otherKey: "answerId",
-          foreignKey: "userId",
-      });
+            through: "AnswerVote",
+            otherKey: "answerId",
+            foreignKey: "userId",
+        });
 
         User.belongsToMany(models.Comment, {
             through: "CommentVote",
             otherKey: "commentId",
             foreignKey: "userId",
         });
-
     };
     return User;
 };
