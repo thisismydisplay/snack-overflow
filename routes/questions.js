@@ -8,12 +8,13 @@ const router = express.Router();
 router.get(
     "/",
     asyncHandler(async(req, res) => {
-        const questions = await db.Question.findAll({
+        const questions = await db.QuestionVote.findAll({
+            include: [db.User, db.Question],
             order: [
                 ["updatedAt", "ASC"]
             ],
         });
-
+        console.log(questions[0]);
         res.render("questions", { title: "Top Questions", questions });
     })
 );
