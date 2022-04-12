@@ -9,12 +9,12 @@ html
     div
       nav(class='navbar')
         nav(id='navbar-left')
-          a(href='/' ): img(src='../images/logo-with-text.png')
+          a(href='/' ): img(src='../images/logo-with-text.png')#logo
         nav(id='navbar-center')
           div(class='searchbar-icon-container')
             img(src='https://www.seekpng.com/png/full/12-123945_search-simple-instagram-search-icon-free.png')#search-icon
           div(class='searchbar-input-container')
-            input(type='search' placeholder='Search...')
+            input(type='search' placeholder='Search...' id='searchbar-input')
         nav(id='navbar-right')
         if locals.authenticated
           form(class='form-inline' action='/users/logout' method='post')

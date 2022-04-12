@@ -2,8 +2,34 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    background-color: #FCFCFC;
+    height: 47px;
+    width: 900px;
+    padding: 0px 5px;
+}
+
+#logo {
+    height: 30px;
+    width: auto;
 }
 
 #search-icon {
-    width: 20px;
+    width: 1rem;
 }
+
+#navbar-center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px black solid;
+    border-radius: 2.5px;
+    padding: 4px;
+    min-width: 600px;
+}
+
+#searchbar-input {
+    border: none;
+}
+
+.searchbar {}
