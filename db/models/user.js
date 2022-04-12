@@ -1,7 +1,8 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
-        "User", {
+        "User",
+        {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -30,9 +31,10 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.DATE,
             },
-        }, {}
+        },
+        {}
     );
-    User.associate = function(models) {
+    User.associate = function (models) {
         // associations can be defined here
         User.hasMany(models.Question, { foreignKey: "userId" });
         User.hasMany(models.Answer, { foreignKey: "userId" });

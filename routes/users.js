@@ -24,13 +24,15 @@ const userValidators = [
         .isLength({ min: 3, max: 25 })
         .withMessage("Username must be between 3 and 25 characters long")
         .custom((value) => {
-            return db.User.findOne({ where: { username: value } }).then((user) => {
-                if (user) {
-                    return Promise.reject(
-                        "The provided username is already in use by another account"
-                    );
+            return db.User.findOne({ where: { username: value } }).then(
+                (user) => {
+                    if (user) {
+                        return Promise.reject(
+                            "The provided username is already in use by another account"
+                        );
+                    }
                 }
-            });
+            );
         }),
     check("email")
         .exists({ checkFalsy: true })
@@ -51,7 +53,7 @@ const userValidators = [
     check("password")
         .exists({ checkFalsy: true })
         .withMessage("Please provide a value for Password")
-        .isLength({ min:8, max: 50 })
+        .isLength({ min: 8, max: 50 })
         .withMessage("Password must be between 8 and 50 characters long")
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, "g")
         .withMessage(
@@ -60,10 +62,8 @@ const userValidators = [
     check("confirmPassword")
         .exists({ checkFalsy: true })
         .withMessage("Please provide a value for Confirm Password")
-        .isLength({ min:8, max: 50 })
-        .withMessage(
-            "Password must be between 8 and 50 characters long"
-        )
+        .isLength({ min: 8, max: 50 })
+        .withMessage("Password must be between 8 and 50 characters long")
         .custom((value, { req }) => {
             if (value !== req.body.password) {
                 throw new Error("Confirm Password does not match Password");
@@ -73,104 +73,102 @@ const userValidators = [
 ];
 
 router.post(
-  "/register",
-  csrfProtection,
-  userValidators,
-  asyncHandler(async (req, res) => {
-      const { email, username, password } = req.body;
+    "/register",
+    csrfProtection,
+    userValidators,
+    asyncHandler(async (req, res) => {
+        const { email, username, password } = req.body;
 
-      const user = db.User.build({
-          email,
-          username,
-      });
+        const user = db.User.build({
+            email,
+            username,
+        });
 
-      const validatorErrors = validationResult(req);
+        const validatorErrors = validationResult(req);
 
-      if (validatorErrors.isEmpty()) {
-          const hashedPassword = await bcrypt.hash(password, 10);
-          user.hashedPassword = hashedPassword;
-          await user.save();
-          loginUser(req, res, user);
-          res.redirect("/");
-      } else {
-          const errors = validatorErrors.array().map((error) => error.msg);
-          res.render("user-register", {
-              title: "Register",
-              user,
-              errors,
-              csrfToken: req.csrfToken(),
-          });
-      }
-  })
+        if (validatorErrors.isEmpty()) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user.hashedPassword = hashedPassword;
+            await user.save();
+            loginUser(req, res, user);
+            res.redirect("/");
+        } else {
+            const errors = validatorErrors.array().map((error) => error.msg);
+            res.render("user-register", {
+                title: "Register",
+                user,
+                errors,
+                csrfToken: req.csrfToken(),
+            });
+        }
+    })
 );
 
 const loginValidators = [
-  check("email")
-      .exists({ checkFalsy: true })
-      .withMessage("Please provide a value for Email Address"),
-  check("password")
-      .exists({ checkFalsy: true })
-      .withMessage("Please provide a value for Password"),
+    check("email")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for Email Address"),
+    check("password")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for Password"),
 ];
 
-
 router.get("/login", csrfProtection, (req, res) => {
-  res.render("user-login", {
-      title: "Login",
-      csrfToken: req.csrfToken(),
-  });
+    res.render("user-login", {
+        title: "Login",
+        csrfToken: req.csrfToken(),
+    });
 });
 
 router.post(
-  "/login",
-  csrfProtection,
-  loginValidators,
-  asyncHandler(async (req, res) => {
-      const { email, password } = req.body;
+    "/login",
+    csrfProtection,
+    loginValidators,
+    asyncHandler(async (req, res) => {
+        const { email, password } = req.body;
 
-      let errors = [];
-      const validatorErrors = validationResult(req);
+        let errors = [];
+        const validatorErrors = validationResult(req);
 
-      if (validatorErrors.isEmpty()) {
-          // TODO Attempt to login the user.
+        if (validatorErrors.isEmpty()) {
+            // TODO Attempt to login the user.
 
-          // Attempt to get the user by their email address.
-          const user = await db.User.findOne({ where: { email } });
+            // Attempt to get the user by their email address.
+            const user = await db.User.findOne({ where: { email } });
 
-          if (user !== null) {
-              // If the user exists then compare their password
-              // to the provided password.
-              const passwordMatch = await bcrypt.compare(
-                  password,
-                  user.hashedPassword.toString()
-              );
-              if (passwordMatch) {
-                  // If the password hashes match, then login the user
-                  // and redirect them to the default route.
-                  loginUser(req, res, user);
-                  return res.redirect("/");
-              }
-          }
-          errors.push(
-              "Login failed for the provided email address and password"
-          );
-      } else {
-          errors = validatorErrors.array().map((error) => error.msg);
-      }
+            if (user !== null) {
+                // If the user exists then compare their password
+                // to the provided password.
+                const passwordMatch = await bcrypt.compare(
+                    password,
+                    user.hashedPassword.toString()
+                );
+                if (passwordMatch) {
+                    // If the password hashes match, then login the user
+                    // and redirect them to the default route.
+                    loginUser(req, res, user);
+                    return res.redirect("/");
+                }
+            }
+            errors.push(
+                "Login failed for the provided email address and password"
+            );
+        } else {
+            errors = validatorErrors.array().map((error) => error.msg);
+        }
 
-      res.render("user-login", {
-          title: "Login",
-          email,
-          errors,
-          csrfToken: req.csrfToken(),
-      });
-  })
+        res.render("user-login", {
+            title: "Login",
+            email,
+            errors,
+            csrfToken: req.csrfToken(),
+        });
+    })
 );
 
 router.post("/logout", (req, res) => {
-  logoutUser(req, res);
-  res.redirect("/");
+    logoutUser(req, res);
+    res.redirect("/");
 });
-
 
 module.exports = router;

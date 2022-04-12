@@ -1,7 +1,8 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
     const CommentVote = sequelize.define(
-        "CommentVote", {
+        "CommentVote",
+        {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -30,9 +31,10 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.DATE,
             },
-        }, {}
+        },
+        {}
     );
-    CommentVote.associate = function(models) {
+    CommentVote.associate = function (models) {
         CommentVote.belongsTo(models.User, { foreignKey: "userId" });
         CommentVote.belongsTo(models.Comment, { foreignKey: "commentId" });
     };

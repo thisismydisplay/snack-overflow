@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     position: sticky;
-    background-color: #FCFCFC;
+    background-color: #fcfcfc;
     height: 47px;
     width: 900px;
     padding: 0px 5px;
@@ -32,4 +32,5 @@
     border: none;
 }
 
-.searchbar {}
+.searchbar {
+}

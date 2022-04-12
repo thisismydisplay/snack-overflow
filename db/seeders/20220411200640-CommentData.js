@@ -31,7 +31,7 @@ module.exports = {
                     content: "Test content 3",
                     userId: 5,
                     questionId: 4,
-                    
+
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
@@ -47,6 +47,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete('Comments', null, {});
+        return queryInterface.bulkDelete("Comments", null, {});
     },
 };

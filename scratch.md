@@ -9,7 +9,9 @@
     <div class="searchbar-input-container">
         <input type="search" value placeholder="Photos, people, or groups" id="input_tag">
     </div>
+
 </div>
 
 ### Dropdown
+
 option(value=sub.id selected=(sub.id === subId)) #{sub.name}
