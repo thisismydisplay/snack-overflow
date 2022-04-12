@@ -1,28 +1,26 @@
 doctype html
 html
   head
-      block head
-        title="Snack Overflow"
-        link(rel='stylesheet' href='/stylesheets/reset.css')
+    block head
+      title="Snack Overflow"
+      link(rel='stylesheet' href='/stylesheets/reset.css')
+      link(rel='stylesheet' href='/stylesheets/layout.css')
   body
-    nav
-      a(href='/') Snack Overflow
-      button(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
-        span
-      div
-        ul
-          li(class='nav-item'): a(class='nav-link' href='/questions') Questions
-        ul(class='navbar-nav mr-auto')
-          //- Empty menu keeps the content that follows the
-          //- unordered list correctly positioned on the
-          //- right side of the navbar.
+    div
+      nav(class='navbar')
+        nav(id='navbar-left')
+          a(href='/' ): img(src='../images/logo-with-text.png')
+        nav(id='navbar-center')
+          div(class='searchbar-icon-container')
+            img(src='https://www.seekpng.com/png/full/12-123945_search-simple-instagram-search-icon-free.png')#search-icon
+          div(class='searchbar-input-container')
+            input(type='search' placeholder='Search...')
+        nav(id='navbar-right')
         if locals.authenticated
-          span(class='navbar-text px-4') Welcome #{user.username}!
-          form(class='form-inline pr-4' action='/users/logout' method='post')
-            button(class='btn btn-sm btn-warning' type='submit') Logout
+          form(class='form-inline' action='/users/logout' method='post')
+            button(class='nav-btn' type='submit') Logout
         else
-          span(class='navbar-text px-4')
-            a(class='btn btn-sm btn-dark mr-2' href='/users/login') Login
-            a(class='btn btn-sm btn-dark' href='/users/register') Register
+          a(class='nav-btn' href='/users/login') Login
+          a(class='nav-btn' href='/users/register') Register
     .container
     block content
