@@ -1,3 +1,9 @@
+#nav-wrapper {
+    width: 100%;
+    border-top: 3px solid #ED7A1C;
+    border-bottom: 1px solid lightgray;
+}
+
 .navbar {
     display: flex;
     align-items: center;
@@ -32,5 +38,5 @@
     border: none;
 }
 
-.searchbar {
-}
+/* .searchbar {
+} */

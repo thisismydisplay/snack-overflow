@@ -1,11 +1,12 @@
 extends layout.pug
 block content
+    link(rel='stylesheet' href='/stylesheets/questions.css')
     div.body-content-container
         .body-header-content
             .title-container
-                span #{title}
+                span#header-title #{title}
             .btn-container
-                button Ask Question
+                button.ask-button Ask Question
         .question-list-container
             each question in questions
                 .question-container
