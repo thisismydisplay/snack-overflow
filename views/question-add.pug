@@ -1,0 +1,16 @@
+extends layout.pug
+
+include utils.pug
+
+block content
+  h1 #{formTitle}
+  +validationErrorSummary(errors)
+  form(action='/questions' method='POST')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    label(for='title') Title:
+    input(type='text' name='title' value=title)
+    label(for='content') Content:
+    textarea(name='content' value=content)
+    div.form-buttons
+      button(type='submit' class='form-submit-button') Add Question
+      a(href='/' class='form-cancel-button') Cancel
