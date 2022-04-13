@@ -23,7 +23,6 @@ block content
           a(href=`/questions/${question.id}/edit`): button.edit-button Edit
           a(href=`/questions/${question.id}/delete`): button.delete-button Delete
         else
-          span test
     .answer-container
       div.answer-header
         span.num-answers #{answers.length} Answers
@@ -34,5 +33,13 @@ block content
               p#answer-text #{answer.content}
             .sidebar-container
               button.vote-button.upvote-button
+                  //- NEED TO REFACTOR so that answers with 0 votes
+                  //- display 0 instead of undefined
+                  //- if (`${answerVotesCollection[`${answer.id}vote`]}`
+                  //-   span.vote-span 0
+                  //- else
               span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
               button.vote-button.downvote-button
+    .answer-form-container
+      .btn-container#post-answer-btn
+        a(href='/answers/add' method='GET'): button.post-answer-button Post Your Answer

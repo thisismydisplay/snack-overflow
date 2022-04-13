@@ -1,20 +1,20 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const db = require("../db/models");
-const { csrfProtection, asyncHandler } = require("./utils");
+const { csrfProtection, asyncHandler, checkPermissions } = require("./utils");
 const { requireAuth, restoreUser } = require("../auth");
 const res = require("express/lib/response");
 //const sequelize = require("sequelize");
 
 const router = express.Router();
 
-const checkPermissions = (resource, currentUser) => {
-  if (resource.userId !== currentUser.id) {
-    const err = new Error('Illegal operation.');
-    err.status = 403;
-    throw err;
-  }
-};
+// const checkPermissions = (resource, currentUser) => {
+//   if (resource.userId !== currentUser.id) {
+//     const err = new Error('Illegal operation.');
+//     err.status = 403;
+//     throw err;
+//   }
+// };
 
 
 router.get(
