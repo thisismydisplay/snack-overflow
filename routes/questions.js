@@ -130,8 +130,14 @@ router.get(
             console.log(answerVotesCollection);
         });
 
+        let isUser = false;
+        console.log(res.locals.user.id)
+        console.log(question.id)
+        if (res.locals.user.id == question.id) isUser = true;
+        console.log(isUser)
         res.render("question-details", {
             question,
+            isUser,
             votes: voteCollection[`${question.id}vote`],
             answers,
             answerVotesCollection,

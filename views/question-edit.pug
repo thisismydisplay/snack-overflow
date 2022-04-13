@@ -12,4 +12,4 @@ block content
         textarea(name='content') #{question.content}
         div.form-buttons
             button(type='submit' class='form-submit-button') Edit Question
-            a(href='/' class='form-cancel-button') Cancel
+            a(href=`/questions/${question.id}` class='form-cancel-button') Cancel
