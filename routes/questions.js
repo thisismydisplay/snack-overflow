@@ -192,8 +192,46 @@ router.get(
 
         res.render("question-edit", {
             question,
+            questionId,
             csrfToken: req.csrfToken(),
         });
+    })
+);
+
+router.post(
+    "/:id(\\d+)/edit",
+    csrfProtection,
+    requireAuth,
+    asyncHandler(async(req, res) => {
+        console.log("You are here.");
+        const questionId = parseInt(req.params.id, 10);
+        const questionToUpdate = await db.Question.findByPk(questionId);
+
+        const { title, content, createdAt, userId } = req.body;
+
+        const question = { title, content, createdAt, userId };
+
+        const validatorErrors = validationResult(req);
+        console.log("************", question);
+        console.log("************", questionToUpdate);
+        if (validatorErrors.isEmpty()) {
+            console.log("===============", question);
+            console.log("===============", questionToUpdate);
+            await questionToUpdate.update(question);
+            console.log("HELLO!!!!!!!!!");
+            res.redirect(`/questions/${questionId}`);
+        } else {
+            const errors = validatorErrors.array().map((error) => error.msg);
+            res.render("question-edit", {
+                formTitle: "Edit Question",
+                createdAt,
+                question: {...question, id: questionId },
+                errors,
+                csrfToken: req.csrfToken(),
+            });
+        }
+
+        res.redirect();
     })
 );
 
