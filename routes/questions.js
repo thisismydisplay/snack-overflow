@@ -77,7 +77,56 @@ router.get(
     // res.render("questions", { title: "Top Questions",  });
 );
 
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const questionId = parseInt(req.params.id, 10);
+    const question = await db.Question.findByPk(questionId, {
+        include: [db.User, db.QuestionVote],
+    });
+    const answers = await db.Answer.findAll({
+        where: {
+            questionId: question.id
+        }
+    })
+    if (!answers) answers.length = 0;
 
+    const questionVotes = await db.QuestionVote.findAll();
+    const voteCollection = {};
+
+    const answerVotes = await db.AnswerVote.findAll();
+    const answerVotesCollection = {};
+
+
+    questionVotes.forEach((questionVote) => {
+        if (!voteCollection[`${questionVote.questionId}vote`]) {
+            voteCollection[`${questionVote.questionId}vote`] = 0;
+        }
+        if (questionVote.isUpvote === true) {
+            voteCollection[`${questionVote.questionId}vote`] += 1;
+        } else {
+            voteCollection[`${questionVote.questionId}vote`] -= 1;
+        }
+    });
+
+    answerVotes.forEach((AnswerVote) => {
+        if (!answerVotesCollection[`${AnswerVote.answerId}vote`]) {
+            answerVotesCollection[`${AnswerVote.answerId}vote`] = 0;
+        }
+        if (AnswerVote.isUpvote === true) {
+            answerVotesCollection[`${AnswerVote.answerId}vote`] += 1;
+        } else {
+            answerVotesCollection[`${AnswerVote.answerId}vote`] -= 1;
+        }
+        console.log(answerVotesCollection);
+    });
+
+
+    res.render("question-details", {
+        question,
+        votes: voteCollection[`${question.id}vote`],
+        answers,
+        answerVotesCollection,
+    });
+}))
 
 
 const questionValidators = [
@@ -110,22 +159,22 @@ router.post(
         if (validatorErrors.isEmpty()) {
             await question.save();
             res.redirect('/questions');
-          } else {
+        } else {
             const errors = validatorErrors.array().map((error) => error.msg);
             res.render('question-add', {
-              formTitle: 'Add Question',
-              title: question.title,
-              content: question.content,
-              question,
-              errors,
-              csrfToken: req.csrfToken(),
+                formTitle: 'Add Question',
+                title: question.title,
+                content: question.content,
+                question,
+                errors,
+                csrfToken: req.csrfToken(),
             });
-          }
+        }
     })
 );
 
 router.get('/add', csrfProtection, (req, res) => {
-    res.render("question-add", {formTitle: 'Add Question', title: 'test', content: 'test', csrfToken: req.csrfToken(),})
+    res.render("question-add", { formTitle: 'Add Question', title: 'test', content: 'test', csrfToken: req.csrfToken(), })
 })
 
 module.exports = router;
