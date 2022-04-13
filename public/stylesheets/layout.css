@@ -11,7 +11,7 @@
     position: sticky;
     background-color: #fcfcfc;
     height: 47px;
-    width: 900px;
+    width: fit-content;
     padding: 0px 5px;
 }
 
@@ -28,15 +28,16 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border: 1px black solid;
+    border: 0.25px black solid;
     border-radius: 2.5px;
-    padding: 4px;
-    min-width: 600px;
+    padding: 2px;
+    min-width: max-content;
 }
 
 #searchbar-input {
     border: none;
+    width: 600px;
 }
 
-/* .searchbar {
-} */
+.searchbar {}
+
