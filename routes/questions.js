@@ -7,15 +7,15 @@ const { requireAuth } = require("../auth");
 
 const router = express.Router();
 
-
-
 router.get(
     "/",
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questions = await db.Question.findAll({
             include: [db.User, db.QuestionVote],
             // where: { isUpvote: true},
-            order: [["updatedAt", "DESC"]],
+            order: [
+                ["updatedAt", "DESC"]
+            ],
         });
         const questionVotes = await db.QuestionVote.findAll();
         const voteCollection = {};
@@ -77,69 +77,69 @@ router.get(
     // res.render("questions", { title: "Top Questions",  });
 );
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
-    const questionId = parseInt(req.params.id, 10);
-    const question = await db.Question.findByPk(questionId, {
-        include: [db.User, db.QuestionVote],
-    });
-    const answers = await db.Answer.findAll({
-        where: {
-            questionId: question.id
-        }
+router.get(
+    "/:id(\\d+)",
+    asyncHandler(async(req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const question = await db.Question.findByPk(questionId, {
+            include: [db.User, db.QuestionVote],
+        });
+        const answers = await db.Answer.findAll({
+            where: {
+                questionId: question.id,
+            },
+        });
+        if (!answers) answers.length = 0;
+
+        const questionVotes = await db.QuestionVote.findAll();
+        const voteCollection = {};
+
+        const answerVotes = await db.AnswerVote.findAll();
+        const answerVotesCollection = {};
+
+        questionVotes.forEach((questionVote) => {
+            if (!voteCollection[`${questionVote.questionId}vote`]) {
+                voteCollection[`${questionVote.questionId}vote`] = 0;
+            }
+            if (questionVote.isUpvote === true) {
+                voteCollection[`${questionVote.questionId}vote`] += 1;
+            } else {
+                voteCollection[`${questionVote.questionId}vote`] -= 1;
+            }
+        });
+
+        answerVotes.forEach((AnswerVote) => {
+            if (!answerVotesCollection[`${AnswerVote.answerId}vote`]) {
+                answerVotesCollection[`${AnswerVote.answerId}vote`] = 0;
+            }
+            if (AnswerVote.isUpvote === true) {
+                answerVotesCollection[`${AnswerVote.answerId}vote`] += 1;
+            } else {
+                answerVotesCollection[`${AnswerVote.answerId}vote`] -= 1;
+            }
+            console.log(answerVotesCollection);
+        });
+
+        res.render("question-details", {
+            question,
+            votes: voteCollection[`${question.id}vote`],
+            answers,
+            answerVotesCollection,
+        });
     })
-    if (!answers) answers.length = 0;
-
-    const questionVotes = await db.QuestionVote.findAll();
-    const voteCollection = {};
-
-    const answerVotes = await db.AnswerVote.findAll();
-    const answerVotesCollection = {};
-
-
-    questionVotes.forEach((questionVote) => {
-        if (!voteCollection[`${questionVote.questionId}vote`]) {
-            voteCollection[`${questionVote.questionId}vote`] = 0;
-        }
-        if (questionVote.isUpvote === true) {
-            voteCollection[`${questionVote.questionId}vote`] += 1;
-        } else {
-            voteCollection[`${questionVote.questionId}vote`] -= 1;
-        }
-    });
-
-    answerVotes.forEach((AnswerVote) => {
-        if (!answerVotesCollection[`${AnswerVote.answerId}vote`]) {
-            answerVotesCollection[`${AnswerVote.answerId}vote`] = 0;
-        }
-        if (AnswerVote.isUpvote === true) {
-            answerVotesCollection[`${AnswerVote.answerId}vote`] += 1;
-        } else {
-            answerVotesCollection[`${AnswerVote.answerId}vote`] -= 1;
-        }
-        console.log(answerVotesCollection);
-    });
-
-
-    res.render("question-details", {
-        question,
-        votes: voteCollection[`${question.id}vote`],
-        answers,
-        answerVotesCollection,
-    });
-}))
-
+);
 
 const questionValidators = [
     check("title")
-        .exists({ checkFalsy: true })
-        .withMessage("Please provide a value for title")
-        .isLength({ min: 2, max: 100 })
-        .withMessage("Title must be between 2 and 100 characters"),
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a value for title")
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Title must be between 2 and 100 characters"),
     check("content")
-        .exists({ checkFalsy: true })
-        .withMessage("Please provide content for your question")
-        .isLength({ max: 2000 })
-        .withMessage("Max length 2000 characters, please be more concise"),
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide content for your question")
+    .isLength({ max: 2000 })
+    .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -147,9 +147,9 @@ router.post(
     csrfProtection,
     requireAuth,
     questionValidators,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const { title, content } = req.body;
-        console.log('----------', req.body)
+        //console.log('----------', req.body)
         const question = await db.Question.build({
             title,
             content,
@@ -158,11 +158,11 @@ router.post(
         const validatorErrors = validationResult(req);
         if (validatorErrors.isEmpty()) {
             await question.save();
-            res.redirect('/questions');
+            res.redirect("/questions");
         } else {
             const errors = validatorErrors.array().map((error) => error.msg);
-            res.render('question-add', {
-                formTitle: 'Add Question',
+            res.render("question-add", {
+                formTitle: "Add Question",
                 title: question.title,
                 content: question.content,
                 question,
@@ -173,8 +173,28 @@ router.post(
     })
 );
 
-router.get('/add', csrfProtection, (req, res) => {
-    res.render("question-add", { formTitle: 'Add Question', title: 'test', content: 'test', csrfToken: req.csrfToken(), })
-})
+router.get("/add", csrfProtection, (req, res) => {
+    res.render("question-add", {
+        formTitle: "Add Question",
+        title: "test",
+        content: "test",
+        csrfToken: req.csrfToken(),
+    });
+});
+
+router.get(
+    "/:id(\\d+)/edit",
+    csrfProtection,
+    requireAuth,
+    asyncHandler(async(req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const question = await db.Question.findByPk(questionId);
+
+        res.render("question-edit", {
+            question,
+            csrfToken: req.csrfToken(),
+        });
+    })
+);
 
 module.exports = router;
