@@ -20,10 +20,12 @@ module.exports = {
             questionId: {
                 type: Sequelize.INTEGER,
                 references: { model: "Questions" },
+                onDelete: 'CASCADE',
             },
             answerId: {
                 type: Sequelize.INTEGER,
                 references: { model: "Answers" },
+                onDelete: 'CASCADE'
             },
             createdAt: {
                 allowNull: false,

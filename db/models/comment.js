@@ -41,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
         Comment.belongsTo(models.User, { foreignKey: "userId" });
         Comment.belongsTo(models.Question, { foreignKey: "questionId" });
-        Comment.belongsTo(models.Answer, { foreignKey: "answerId" });
-        Comment.hasMany(models.CommentVote, { foreignKey: "commentId" });
+        Comment.belongsTo(models.Answer, { foreignKey: "answerId", onDelete: 'CASCADE' });
+        Comment.hasMany(models.CommentVote, { foreignKey: "commentId", onDelete: 'CASCADE' });
 
         Comment.belongsToMany(models.User, {
             through: "CommentVote",

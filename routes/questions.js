@@ -153,7 +153,7 @@ const questionValidators = [
 ];
 
 router.post(
-    "/",
+    "/add",
     csrfProtection,
     requireAuth,
     restoreUser,
@@ -252,6 +252,41 @@ router.post(
         }
 
         res.redirect();
+    })
+);
+
+router.get(
+    "/:id(\\d+)/delete",
+    csrfProtection,
+    requireAuth,
+    restoreUser,
+    asyncHandler(async(req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const question = await db.Question.findByPk(questionId);
+
+        checkPermissions(question, res.locals.user);
+
+        res.render("question-delete", {
+            question,
+            csrfToken: req.csrfToken(),
+        });
+    })
+);
+
+
+router.post(
+    "/:id(\\d+)/delete",
+    csrfProtection,
+    requireAuth,
+    restoreUser,
+    asyncHandler(async(req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const question = await db.Question.findByPk(questionId);
+
+        checkPermissions(question, res.locals.user);
+
+        await question.destroy()
+        res.redirect('/questions')
     })
 );
 

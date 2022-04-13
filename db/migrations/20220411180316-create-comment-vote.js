@@ -17,6 +17,7 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: { model: "Comments" },
+                onDelete: 'CASCADE'
             },
             isUpvote: {
                 allowNull: false,
