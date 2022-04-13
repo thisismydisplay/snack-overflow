@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "cleanSlate": "npx dotenv sequelize db:seed:undo:all && npx dotenv sequelize db:migrate:undo:all && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all",
+        "herokuCleanSlate": "heroku run npx dotenv sequelize db:seed:undo:all && heroku run npx dotenv sequelize db:migrate:undo:all && heroku run npx dotenv sequelize db:migrate && heroku run npx dotenv sequelize db:seed:all",
         "start": "per-env",
         "start:development": "nodemon -r dotenv/config ./bin/www",
         "start:production": "node ./bin/www"
