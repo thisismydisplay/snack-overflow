@@ -2,10 +2,20 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
-const { requireAuth } = require("../auth");
+const { requireAuth, restoreUser } = require("../auth");
+const res = require("express/lib/response");
 //const sequelize = require("sequelize");
 
 const router = express.Router();
+
+const checkPermissions = (resource, currentUser) => {
+  if (resource.userId !== currentUser.id) {
+    const err = new Error('Illegal operation.');
+    err.status = 403;
+    throw err;
+  }
+};
+
 
 router.get(
     "/",
@@ -146,6 +156,7 @@ router.post(
     "/",
     csrfProtection,
     requireAuth,
+    restoreUser,
     questionValidators,
     asyncHandler(async(req, res) => {
         const { title, content } = req.body;
@@ -186,9 +197,12 @@ router.get(
     "/:id(\\d+)/edit",
     csrfProtection,
     requireAuth,
+    restoreUser,
     asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
+
+        checkPermissions(question, res.locals.user);
 
         res.render("question-edit", {
             question,
@@ -202,23 +216,29 @@ router.post(
     "/:id(\\d+)/edit",
     csrfProtection,
     requireAuth,
+    restoreUser,
     asyncHandler(async(req, res) => {
         console.log("You are here.");
         const questionId = parseInt(req.params.id, 10);
         const questionToUpdate = await db.Question.findByPk(questionId);
+
+        // console.log("HELOOOOOOO-----------------", res.locals.user)
+        // console.log("this is question to update", questionToUpdate)
+
+        checkPermissions(questionToUpdate, res.locals.user);
 
         const { title, content, createdAt, userId } = req.body;
 
         const question = { title, content, createdAt, userId };
 
         const validatorErrors = validationResult(req);
-        console.log("************", question);
-        console.log("************", questionToUpdate);
+        // console.log("************", question);
+        // console.log("************", questionToUpdate);
         if (validatorErrors.isEmpty()) {
-            console.log("===============", question);
-            console.log("===============", questionToUpdate);
+            // console.log("===============", question);
+            // console.log("===============", questionToUpdate);
             await questionToUpdate.update(question);
-            console.log("HELLO!!!!!!!!!");
+            // console.log("HELLO!!!!!!!!!");
             res.redirect(`/questions/${questionId}`);
         } else {
             const errors = validatorErrors.array().map((error) => error.msg);
