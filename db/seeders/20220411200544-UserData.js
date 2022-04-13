@@ -1,4 +1,19 @@
 "use strict";
+const usersJson = require("../../demo-seedUsers/userDatabase.json");
+
+
+
+const results = [];
+
+usersJson.forEach((ele) => {
+    results.push({
+        email: ele.email,
+        username: ele.username,
+        hashedPassword: ele.password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    });
+})
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
@@ -49,6 +64,7 @@ module.exports = {
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
+            ...results
         ]);
     },
 
