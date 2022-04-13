@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 type: DataTypes.INTEGER,
                 references: { model: "Questions" },
+
             },
             createdAt: {
                 allowNull: false,
@@ -37,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     Answer.associate = function (models) {
         // associations can be defined here
         Answer.belongsTo(models.User, { foreignKey: "userId" });
-        Answer.belongsTo(models.Question, { foreignKey: "questionId" });
+        Answer.belongsTo(models.Question, { foreignKey: "questionId", onDelete: 'CASCADE' } );
         Answer.hasMany(models.Comment, { foreignKey: "answerId",  });
         Answer.hasMany(models.AnswerVote, { foreignKey: "answerId" });
 

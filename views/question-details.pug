@@ -19,6 +19,11 @@ block content
           span.vote-count-span #{votes}
           button.vote-button.downvote-button
       .button-container
+        if isUser
+          a(href=`/questions/${question.id}/edit`): button.edit-button Edit
+          a(href=`/questions/${question.id}/delete`): button.delete-button Delete
+        else
+          span test
     .answer-container
       div.answer-header
         span.num-answers #{answers.length} Answers
