@@ -6,7 +6,7 @@ block content
             .title-container
                 span#header-title #{title}
             .btn-container
-                a(href='questions/add' method='GET'): button.ask-button Ask Question
+                a(href='/questions/add' method='GET'): button.ask-button Ask Question
         .question-list-container
             each question in questions
                 .question-container
