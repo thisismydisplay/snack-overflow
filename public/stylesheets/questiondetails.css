@@ -14,7 +14,6 @@
     align-items: center;
 }
 
-
 .content-center {
     background-color: white;
 }
@@ -22,4 +21,22 @@
 .body-sidebar-left,
 .body-sidebar-right {
     width: 200px;
+}
+
+.upvote-button {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 30px solid #f48224;
+    cursor: pointer;
+}
+
+.downvote-button {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 30px solid #f48224;
+    cursor: pointer;
 }

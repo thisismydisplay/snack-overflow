@@ -9,9 +9,9 @@ block content
       .question-container
         .main-container
           .sidebar-container
-            button.vote-button.upvote-button
-            span.vote-count-span #{votes}
-            button.vote-button.downvote-button
+            a(href="#"): div.vote-button.upvote-button
+            span.vote-count-span.vote-span #{votes}
+            a(href="#"): div.vote-button.downvote-button
           .content-container
             p#content-text #{question.content}
         .button-container
@@ -26,9 +26,9 @@ block content
             div(id= `answer-${answer.id}` class="answer-container")
               .main-container
                 .sidebar-container
-                  button.vote-button.upvote-button
+                  a(href="#"): div.vote-button.upvote-button
                   span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
-                  button.vote-button.downvote-button
+                  a(href="#"): div.vote-button.downvote-button
                 .content-container
                   p(id=`${answer.id}-answer-text`) #{answer.content}
               .button-container
