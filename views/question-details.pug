@@ -3,51 +3,46 @@ extends layout.pug
 include utils.pug
 
 block content
-  link(rel='stylesheet' href='/stylesheets/questions.css')
-
-  div.body-content-container
-    .body-header-content
-      .title-container
-        span#header-title #{question.title}
-      .btn-container
-        a(href='/questions/add' method='GET'): button.ask-button Ask Question
-    .question-container
-      .main-container
-        .sidebar-container
-          button.vote-button.upvote-button
-          span.vote-count-span #{votes}
-          button.vote-button.downvote-button
-        .content-container
-          p#content-text #{question.content}
-      .button-container
-        if loggedInUser === question.userId
-          a(href=`/questions/${question.id}/edit`): button.edit-button Edit
-          a(href=`/questions/${question.id}/delete`): button.delete-button Delete
-
-    .answer-container
-      div.answer-header
-        span.num-answers #{answers.length} Answers
-      div.answer-list-container
-        each answer in answers
-          div(id= `answer-${answer.id}` class="answer-container")
-            .main-container
-              .sidebar-container
-                button.vote-button.upvote-button
-                span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
-                button.vote-button.downvote-button
-              .content-container
-                p(id=`${answer.id}-answer-text`) #{answer.content}
-            .button-container
-              if loggedInUser === answer.userId
-                button(class="edit-answer-btn" id=`edit-answer-btn-${answer.id}`) Edit
-                button(class="delete-answer-btn" id=`delete-answer-btn-${answer.id}`) Delete
-                form(class='hidden' id=`edit-answer-form-${answer.id}`)
-                        label Content:
-                        input(type="text" name="content" value=answer.content id=`${answer.id}-edit-answer`)
-                        button(class="edit-answer-submit" id=`edit-answer-submit-${answer.id}`) Submit Edit
-    .answer-form-container
-      .btn-container#post-answer-btn
-        a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
-  script(src="/javascripts/votes.js")
-  script(src="/javascripts/answerEdit.js")
-  script(src="/javascripts/answerDelete.js")
+  div.content-body
+    .body-sidebar-left
+    .content-center
+      .question-container
+        .main-container
+          .sidebar-container
+            button.vote-button.upvote-button
+            span.vote-count-span #{votes}
+            button.vote-button.downvote-button
+          .content-container
+            p#content-text #{question.content}
+        .button-container
+          if loggedInUser === question.userId
+            a(href=`/questions/${question.id}/edit`): button.edit-button Edit
+            a(href=`/questions/${question.id}/delete`): button.delete-button Delete
+      .answer-container
+        div.answer-header
+          span.num-answers #{answers.length} Answers
+        div.answer-list-container
+          each answer in answers
+            div(id= `answer-${answer.id}` class="answer-container")
+              .main-container
+                .sidebar-container
+                  button.vote-button.upvote-button
+                  span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
+                  button.vote-button.downvote-button
+                .content-container
+                  p(id=`${answer.id}-answer-text`) #{answer.content}
+              .button-container
+                if loggedInUser === answer.userId
+                  button(class="edit-answer-btn" id=`edit-answer-btn-${answer.id}`) Edit
+                  button(class="delete-answer-btn" id=`delete-answer-btn-${answer.id}`) Delete
+                  form(class='hidden' id=`edit-answer-form-${answer.id}`)
+                    label Content:
+                    input(type="text" name="content" value=answer.content id=`${answer.id}-edit-answer`)
+                    button(class="edit-answer-submit" id=`edit-answer-submit-${answer.id}`) Submit Edit
+      .answer-form-container
+        .btn-container#post-answer-btn
+          a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
+    .body-sidebar-right
+    script(src="/javascripts/votes.js")
+    script(src="/javascripts/answerEdit.js")
+    script(src="/javascripts/answerDelete.js")

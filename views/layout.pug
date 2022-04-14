@@ -13,7 +13,7 @@ html
     div#nav-wrapper
       nav(class='navbar')
         nav(id='navbar-left')
-          a(href='/' ): img(src='../images/oreoflow.png')#logo
+          a(href='/' ): img(src='/images/oreoflow.png')#logo
         nav(id='navbar-center')
           div(class='searchbar-icon-container')
             img(src='https://www.seekpng.com/png/full/12-123945_search-simple-instagram-search-icon-free.png')#search-icon
@@ -27,4 +27,13 @@ html
           a(class='nav-btn' href='/users/login') Login
           a(class='nav-btn' href='/users/register') Register
     .container
-    block content
+      div.body-content-container
+        .body-header-content
+          .left-sidebar-header
+          .center-header
+            .title-container
+              span#header-title #{title}
+            .btn-container
+              a(href='/questions/add' method='GET'): button.ask-button Ask Question
+          .right-sidebar-header
+        block content

@@ -1,29 +1,24 @@
 extends layout.pug
 block content
-    link(rel='stylesheet' href='/stylesheets/questions.css')
-    div.body-content-container
-        .body-header-content
-            .title-container
-                span#header-title #{title}
-            .btn-container
-                a(href='/questions/add' method='GET'): button.ask-button Ask Question
-        .question-list-container
-            each question in questions
-                .question-container
+  .question-list-container
+    each question in questions
+      .question-container
 
-                    .vote-answer-div
-                        .vote-div
-                            span.vote-span= `${voteCollection[`${question.id}vote`]}`
-                        .answer-div
-                            span(class=`num-answer-span` id=`span${question.id}`)= `${answerCollection[`${question.id}numAnswers`]}`
-                            span(class=`num-answer-label num-answer-label${question.id}`)  Answers
-                    .title-content-div
-                        .title-div
-                            a(href=`/questions/${question.id}`): span.question-title-span= `${question.title}`
-                        .tags-div
-                        .username-content-div
-                            .img-div
-                            span.username-span= `${question.User.username}`
-                            .modified-div
-                            span.modified-span= `created at ${question.createdAt}`
-    script(src="/javascripts/votes.js")
+        .vote-answer-div
+          .vote-div
+            span.vote-span= `${voteCollection[`${question.id}vote`]}`
+            span.vote-span  Votes
+          .answer-div
+            span(class=`num-answer-span` id=`span${question.id}`)= `${answerCollection[`${question.id}numAnswers`]}`
+            span(class=`num-answer-label num-answer-label${question.id}`)  Answers
+        .title-content-div
+          .title-div
+            a(href=`/questions/${question.id}`): span.question-title-span= `${question.title}`
+          .tags-div
+          .username-content-div
+            .img-div
+            span.username-span= `${question.User.username}`
+            .modified-div
+            span.modified-span= `created t ${question.createdAt}`
+          hr
+  script(src="/javascripts/votes.js")
