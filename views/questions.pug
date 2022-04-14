@@ -15,10 +15,10 @@ block content
                         .vote-div
                             span.vote-span= `${voteCollection[`${question.id}vote`]}`
                         .answer-div
-                            span.answer-span= `${question.User.username}`
+                            span.answer-span= ` Answers`
                     .title-content-div
                         .title-div
-                            span.question-title-span= `${question.title}`
+                            a(href=`/questions/${question.id}`): span.question-title-span= `${question.title}`
                         .tags-div
                         .username-content-div
                             .img-div

@@ -55,3 +55,7 @@ body {
 .title-content-div {
     flex-direction: column;
 }
+
+.hidden {
+    display: none
+}

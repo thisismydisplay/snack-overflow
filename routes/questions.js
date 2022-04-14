@@ -24,6 +24,7 @@ router.get(
             // where: { isUpvote: true},
             order: [["updatedAt", "DESC"]],
         });
+
         const questionVotes = await db.QuestionVote.findAll();
         const voteCollection = {};
         // console.log(questions)
@@ -95,6 +96,7 @@ router.get(
             where: {
                 questionId: question.id,
             },
+            order: [["createdAt", "ASC"]],
         });
         if (!answers) answers.length = 0;
 
@@ -127,14 +129,19 @@ router.get(
             console.log(answerVotesCollection);
         });
 
-        let isUser = false;
-        console.log(res.locals.user.id);
-        console.log(question.id);
-        if (res.locals.user.id == question.id) isUser = true;
-        console.log(isUser);
+        let loggedInUser;
+        if (req.session.auth) {
+            loggedInUser = req.session.auth.userId;
+        }
+        // let isQuestionUser = false;
+        // console.log(res.locals.user.id);
+        // console.log(question.id);
+        // if (res.locals.user.id == question.id) isQuestionUser = true;
+        // console.log(isQuestionUser);
         res.render("question-details", {
             question,
-            isUser,
+            // isQuestionUser,
+            loggedInUser,
             votes: voteCollection[`${question.id}vote`],
             answers,
             answerVotesCollection,
