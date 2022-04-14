@@ -4,12 +4,12 @@ body {
     background-color: whitesmoke;
 }
 
-.title-container {
+/* .title-container {
     padding: 20px;
     width: 100px;
-}
+} */
 
-#header-title {
+/* #header-title {
     font-size: 1.75rem;
     text-align: center;
     position: absolute;
@@ -25,7 +25,7 @@ body {
     border-radius: 3px;
     font-size: 13px;
     cursor: pointer;
-}
+} */
 
 .vote-button {
     /* display: inline-block; */
@@ -97,12 +97,12 @@ body {
     background-color: lightslategrey;
 }
 
-.center-header {
+/* .center-header {
     display: flex;
     justify-content: space-between;
     width: 940px;
     background-color: white;
-}
+} */
 
 .ask-button {
     padding: 0.8em;
@@ -112,6 +112,8 @@ body {
     font-size: 13px;
     cursor: pointer;
     color: white;
+    /* position: relative; */
+    /* z-index: 1000; */
 }
 
 #navbar-left {
