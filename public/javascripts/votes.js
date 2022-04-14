@@ -23,4 +23,66 @@ document.addEventListener("DOMContentLoaded", async() => {
     if (answerVotesEle.innerText === "1 Answers") {
         answerVotesEle.innerText = "1 Answer";
     }
+
+    const votes = document.querySelectorAll("vote-button");
+    votes.forEach((vote) => {
+        vote.addEventListener("click", async(e) => {
+            if (vote.classList.includes("question-upvote-button")) {
+                const questionId = e.target.split("-")[2];
+                console.log("FETCH!!!");
+                const res = await fetch(`/questions/${questionId}/vote`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ vote.value })
+                });
+                console.log("AFTER FETCH!!!");
+                const data = await res.json();
+
+                if (data.message === "Success") {
+                    //update content
+                    const voteSpan = document.querySelector(".question-votes");
+                    let questionVotes = voteSpan.innerText.toString();
+                    // console.log(answerVotes)
+                    let parsedQuestionVotes = parseInt(questionVotes, 10);
+
+                    let updatedQuestionVotes = parsedQuestionVotes + 1;
+                    voteSpan.innerText = `${updatedQuestionVotes}`;
+                    e.target.style.backgroundColor = "#f48224";
+                } else {
+                    // #696F75 grey
+                    // #f48224 orange
+                    //update content
+                    const voteSpan = document.querySelector(".question-votes");
+                    let questionVotes = voteSpan.innerText.toString();
+                    // console.log(answerVotes)
+                    let parsedQuestionVotes = parseInt(questionVotes, 10);
+
+                    let updatedQuestionVotes = parsedQuestionVotes - 1;
+                    voteSpan.innerText = `${updatedQuestionVotes}`;
+                    e.target.style.backgroundColor = "#696F75";
+                }
+            }
+            if (vote.classList.includes("question-downvote-button")) {
+                const questionId = e.target.split("-")[2];
+                const res = await fetch(`/questions/${questionId}/vote`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                });
+            }
+            if (vote.classList.includes("answer-upvote-button")) {
+                const answerId = e.target.split("-")[2];
+                const res = await fetch(`/answers/${answerId}/vote`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                });
+            }
+            if (vote.classList.includes("answer-downvote-button")) {
+                const answerId = e.target.split("-")[2];
+                const res = await fetch(`/answers/${answerId}/vote`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                });
+            }
+        });
+    });
 });

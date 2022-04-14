@@ -18,11 +18,13 @@ const router = express.Router();
 
 router.get(
     "/",
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questions = await db.Question.findAll({
             include: [db.User, db.QuestionVote],
             // where: { isUpvote: true},
-            order: [["updatedAt", "DESC"]],
+            order: [
+                ["updatedAt", "DESC"]
+            ],
         });
 
         const questionVotes = await db.QuestionVote.findAll();
@@ -33,7 +35,6 @@ router.get(
 
         //iterate through QuestionVotes to track number of votes for each question
         questionVotes.forEach((questionVote) => {
-
             //if voteCollection does not have key for question, create key with value 0;
             if (!voteCollection[`${questionVote.questionId}vote`]) {
                 voteCollection[`${questionVote.questionId}vote`] = 0;
@@ -45,12 +46,10 @@ router.get(
             } else {
                 voteCollection[`${questionVote.questionId}vote`] -= 1;
             }
-
         });
 
         //iterate through answers to track number of answers for each question
         answers.forEach((answer) => {
-
             //if answerCollection does not have key for question, create key with value 1
             if (!answerCollection[`${answer.questionId}numAnswers`]) {
                 answerCollection[`${answer.questionId}numAnswers`] = 1;
@@ -59,8 +58,7 @@ router.get(
             else {
                 answerCollection[`${answer.questionId}numAnswers`] += 1;
             }
-
-        })
+        });
         // res.send("ok")
         console.log("vote collection ", voteCollection);
         res.render("questions", {
@@ -105,7 +103,7 @@ router.get(
 
 router.get(
     "/:id(\\d+)",
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId, {
             include: [db.User, db.QuestionVote],
@@ -114,7 +112,9 @@ router.get(
             where: {
                 questionId: question.id,
             },
-            order: [["createdAt", "ASC"]],
+            order: [
+                ["createdAt", "ASC"]
+            ],
         });
         if (!answers) answers.length = 0;
 
@@ -170,15 +170,15 @@ router.get(
 
 const questionValidators = [
     check("title")
-        .exists({ checkFalsy: true })
-        .withMessage("Please provide a value for title")
-        .isLength({ min: 2, max: 100 })
-        .withMessage("Title must be between 2 and 100 characters"),
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a value for title")
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Title must be between 2 and 100 characters"),
     check("content")
-        .exists({ checkFalsy: true })
-        .withMessage("Please provide content for your question")
-        .isLength({ max: 2000 })
-        .withMessage("Max length 2000 characters, please be more concise"),
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide content for your question")
+    .isLength({ max: 2000 })
+    .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -187,7 +187,7 @@ router.post(
     requireAuth,
     restoreUser,
     questionValidators,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const { title, content } = req.body;
         //console.log('----------', req.body)
         const question = await db.Question.build({
@@ -227,7 +227,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -246,7 +246,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         console.log("You are here.");
         const questionId = parseInt(req.params.id, 10);
         const questionToUpdate = await db.Question.findByPk(questionId);
@@ -274,7 +274,7 @@ router.post(
             res.render("question-edit", {
                 formTitle: "Edit Question",
                 createdAt,
-                question: { ...question, id: questionId },
+                question: {...question, id: questionId },
                 errors,
                 csrfToken: req.csrfToken(),
             });
@@ -289,7 +289,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -307,7 +307,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -323,7 +323,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
         res.render("answer-add", {
@@ -336,10 +336,10 @@ router.get(
 // move to questions route
 const answerValidators = [
     check("content")
-        .exists({ checkFalsy: true })
-        .withMessage("Please provide content for your answer")
-        .isLength({ max: 2000 })
-        .withMessage("Max length 2000 characters, please be more concise"),
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide content for your answer")
+    .isLength({ max: 2000 })
+    .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -348,7 +348,7 @@ router.post(
     requireAuth,
     restoreUser,
     answerValidators,
-    asyncHandler(async (req, res) => {
+    asyncHandler(async(req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const { content } = req.body;
         //console.log('----------', req.body)
@@ -370,6 +370,43 @@ router.post(
                 errors,
                 csrfToken: req.csrfToken(),
             });
+        }
+    })
+);
+
+router.put(
+    "/:id(\\d+)/vote",
+    requireAuth,
+    restoreUser,
+    asyncHandler(async(req, res) => {
+        console.log("INSIDE THE ROUTER!!!");
+        const questionVotes = await db.QuestionVote.findAll({
+            where: {
+                questionId: req.params.id,
+            },
+            // include: [db.QuestionVote],
+        });
+        let hasVote = false;
+        questionVotes.forEach((vote) => {
+            if ((vote.userId = req.session.auth.userId)) {
+                hasVote = true;
+                let questionVoteId = vote.id;
+            }
+        });
+
+        // await answer.destroy();
+        // console.log('you have arrived at the delete route: ', req.params.id)
+        if (hasVote) {
+            const thisVote = await db.QuestionVote.findByPk(questionVoteId);
+            await thisVote.destroy();
+            res.json({ message: "Vote Removed" });
+        } else {
+            const newVote = await db.create({
+                userId: req.session.auth.userId,
+                questionId: req.params.id,
+                isUpvote: true,
+            });
+            res.json({ message: "Vote Success" });
         }
     })
 );
