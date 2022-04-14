@@ -2,18 +2,42 @@ body {
     box-sizing: border-box;
     margin: 0 auto;
     width: fit-content;
+    background-color: whitesmoke;
 }
+
 .title-container {
     padding: 20px;
 }
 
+/* Put header-title in the middle top of the page */
 #header-title {
-    font-size: 1.75rem;
+    text-align: center;
+    position: absolute;
+    font-size: 2rem;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-bottom: #555555 solid 2.5px;
+    padding-bottom: 3px;
 }
 
 .btn-container {
     padding: 20px;
 }
+
+.vote-button {
+    /* display: inline-block; */
+    /* overflow: hidden; */
+    width: 40px;
+    height: 25px;
+    /* background-position: 0 -25px; */
+    cursor: pointer;
+}
+
+.vote-button.upvote-button {
+    background-image: url('../public/images/up.png');
+}
+
 
 .ask-button {
     padding: 0.8em;
@@ -25,20 +49,46 @@ body {
     border-radius: 3px;
     font-size: 13px;
     cursor: pointer;
-
 }
+
+.answer-span {
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.modified-span {
+    font-size: 0.75rem;
+    color: #555555;
+}
+
+.question-title-span {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+}
+
 .body-content-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 1300px;
+
 }
 
 .body-header-content {
     display: flex;
     justify-content: space-between;
-    width: 900px;
+    width: 1300px;
     padding: 0px 5px;
     height: 70px;
 }
+
 .question-list-container {
     display: flex;
     flex-direction: column;
@@ -46,12 +96,21 @@ body {
 
 .question-container {
     display: flex;
+    padding: 20px;
 }
 
 .vote-answer-div {
     display: flex;
     flex-direction: column;
 }
+
 .title-content-div {
     flex-direction: column;
+}
+
+hr {
+    border: 1px solid #555555;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }

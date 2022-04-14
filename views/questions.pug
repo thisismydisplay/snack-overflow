@@ -1,28 +1,53 @@
-extends layout.pug
-block content
-    link(rel='stylesheet' href='/stylesheets/questions.css')
-    div.body-content-container
-        .body-header-content
-            .title-container
-                span#header-title #{title}
-            .btn-container
-                a(href='/questions/add' method='GET'): button.ask-button Ask Question
-        .question-list-container
-            each question in questions
-                .question-container
-
-                    .vote-answer-div
-                        .vote-div
-                            span.vote-span= `${voteCollection[`${question.id}vote`]}`
-                        .answer-div
-                            span.answer-span= `${question.User.username}`
-                    .title-content-div
-                        .title-div
-                            span.question-title-span= `${question.title}`
-                        .tags-div
-                        .username-content-div
-                            .img-div
-                            span.username-span= `${question.User.username}`
-                            .modified-div
-                            span.modified-span= `created at ${question.createdAt}`
-    script(src="/javascripts/votes.js")
+html
+  head
+    block head
+      title="Snack Overflow"
+      link(rel='stylesheet' href='/stylesheets/reset.css')
+      link(rel='stylesheet' href='/stylesheets/layout.css')
+      link(rel='stylesheet' href='/stylesheets/question-form.css')
+      link(rel='stylesheet' href='/stylesheets/questions.css')
+      link(rel='stylesheet' href='/stylesheets/questiondetails.css')
+      link(rel='icon' type='image/x-icon' href='/images/snackfavicon.png')
+  body
+    div#nav-wrapper
+      nav(class='navbar')
+        nav(id='navbar-left')
+          a(href='/' ): img(src='../images/oreoflow.png')#logo
+        nav(id='navbar-center')
+          div(class='searchbar-icon-container')
+            img(src='https://www.seekpng.com/png/full/12-123945_search-simple-instagram-search-icon-free.png')#search-icon
+          div(class='searchbar-input-container')
+            input(type='search' placeholder='Search...' id='searchbar-input')
+        nav(id='navbar-right')
+        if locals.authenticated
+          form(class='form-inline' action='/users/logout' method='post')
+            button(class='nav-btn' type='submit') Logout
+        else
+          a(class='nav-btn' href='/users/login') Login
+          a(class='nav-btn' href='/users/register') Register
+    .container
+    block content
+  link(rel='stylesheet' href='/stylesheets/questions.css')
+div.body-content-container
+  .body-header-content
+    .title-container
+      span#header-title #{title}
+    .btn-container
+      a(href='/questions/add' method='GET'): button.ask-button Ask Question
+  .question-list-container
+    each question in questions
+      .question-container
+        .vote-answer-div
+          .vote-div
+            button.vote-button.upvote-button
+            span.question-title-span= `${question.title}`
+            span.vote-span= `${voteCollection[`${question.id}vote`]}`
+            div
+          .answer-div
+            span.answer-span= `Posted by ${question.User.username}`
+            button.vote-button.downvote-button
+              img(src='../public/images/down.png')
+            .modified-div
+              span.modified-span= `created at ${question.createdAt}`
+            hr
+  script(src="/javascripts/votes.js")
