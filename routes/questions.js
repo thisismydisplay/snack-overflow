@@ -1,31 +1,28 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const db = require("../db/models");
-const { csrfProtection, asyncHandler } = require("./utils");
+const { csrfProtection, asyncHandler, checkPermissions } = require("./utils");
 const { requireAuth, restoreUser } = require("../auth");
 const res = require("express/lib/response");
 //const sequelize = require("sequelize");
 
 const router = express.Router();
 
-const checkPermissions = (resource, currentUser) => {
-  if (resource.userId !== currentUser.id) {
-    const err = new Error('Illegal operation.');
-    err.status = 403;
-    throw err;
-  }
-};
-
+// const checkPermissions = (resource, currentUser) => {
+//   if (resource.userId !== currentUser.id) {
+//     const err = new Error('Illegal operation.');
+//     err.status = 403;
+//     throw err;
+//   }
+// };
 
 router.get(
     "/",
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questions = await db.Question.findAll({
             include: [db.User, db.QuestionVote],
             // where: { isUpvote: true},
-            order: [
-                ["updatedAt", "DESC"]
-            ],
+            order: [["updatedAt", "DESC"]],
         });
         const questionVotes = await db.QuestionVote.findAll();
         const voteCollection = {};
@@ -47,7 +44,7 @@ router.get(
             // console.log("Question upvotes: ", questionVote.Question.upvotes)
         });
         // res.send("ok")
-        // console.log("vote collection ", voteCollection)
+        console.log("vote collection ", voteCollection);
         res.render("questions", {
             title: "Top Questions",
             questions,
@@ -89,7 +86,7 @@ router.get(
 
 router.get(
     "/:id(\\d+)",
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId, {
             include: [db.User, db.QuestionVote],
@@ -131,10 +128,10 @@ router.get(
         });
 
         let isUser = false;
-        console.log(res.locals.user.id)
-        console.log(question.id)
+        console.log(res.locals.user.id);
+        console.log(question.id);
         if (res.locals.user.id == question.id) isUser = true;
-        console.log(isUser)
+        console.log(isUser);
         res.render("question-details", {
             question,
             isUser,
@@ -147,15 +144,15 @@ router.get(
 
 const questionValidators = [
     check("title")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for title")
-    .isLength({ min: 2, max: 100 })
-    .withMessage("Title must be between 2 and 100 characters"),
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for title")
+        .isLength({ min: 2, max: 100 })
+        .withMessage("Title must be between 2 and 100 characters"),
     check("content")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide content for your question")
-    .isLength({ max: 2000 })
-    .withMessage("Max length 2000 characters, please be more concise"),
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide content for your question")
+        .isLength({ max: 2000 })
+        .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -164,7 +161,7 @@ router.post(
     requireAuth,
     restoreUser,
     questionValidators,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const { title, content } = req.body;
         //console.log('----------', req.body)
         const question = await db.Question.build({
@@ -204,7 +201,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -223,7 +220,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         console.log("You are here.");
         const questionId = parseInt(req.params.id, 10);
         const questionToUpdate = await db.Question.findByPk(questionId);
@@ -251,7 +248,7 @@ router.post(
             res.render("question-edit", {
                 formTitle: "Edit Question",
                 createdAt,
-                question: {...question, id: questionId },
+                question: { ...question, id: questionId },
                 errors,
                 csrfToken: req.csrfToken(),
             });
@@ -266,7 +263,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -279,20 +276,75 @@ router.get(
     })
 );
 
-
 router.post(
     "/:id(\\d+)/delete",
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
         checkPermissions(question, res.locals.user);
 
-        await question.destroy()
-        res.redirect('/questions')
+        await question.destroy();
+        res.redirect("/questions");
+    })
+);
+
+router.get(
+    "/:id(\\d+)/answer/add",
+    csrfProtection,
+    requireAuth,
+    restoreUser,
+    asyncHandler(async (req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const question = await db.Question.findByPk(questionId);
+        res.render("answer-add", {
+            formTitle: "Add Answer",
+            question,
+            csrfToken: req.csrfToken(),
+        });
+    })
+);
+// move to questions route
+const answerValidators = [
+    check("content")
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide content for your answer")
+        .isLength({ max: 2000 })
+        .withMessage("Max length 2000 characters, please be more concise"),
+];
+
+router.post(
+    "/:id(\\d+)/answer/add",
+    csrfProtection,
+    requireAuth,
+    restoreUser,
+    answerValidators,
+    asyncHandler(async (req, res) => {
+        const questionId = parseInt(req.params.id, 10);
+        const { content } = req.body;
+        //console.log('----------', req.body)
+        const answer = await db.Answer.build({
+            content,
+            questionId,
+            userId: req.session.auth.userId,
+        });
+        const validatorErrors = validationResult(req);
+        if (validatorErrors.isEmpty()) {
+            await answer.save();
+            res.redirect(`/questions/${questionId}`);
+        } else {
+            const errors = validatorErrors.array().map((error) => error.msg);
+            res.render("answer-add", {
+                formTitle: "Add Answer",
+                content: answer.content,
+                answer,
+                errors,
+                csrfToken: req.csrfToken(),
+            });
+        }
     })
 );
 
