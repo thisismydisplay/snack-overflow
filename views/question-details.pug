@@ -6,7 +6,7 @@ block content
   div.content-body
     .body-sidebar-left
     .content-center
-      .question-container
+      div(class=`question-container` id=`question-container-${question.id}`)
         .main-container
           .sidebar-container
             div(class=`vote-button upvote-button question-upvote-button` id=`upvote-question-${question.id}`)

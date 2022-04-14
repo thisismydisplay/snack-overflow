@@ -18,13 +18,11 @@ const router = express.Router();
 
 router.get(
     "/",
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questions = await db.Question.findAll({
             include: [db.User, db.QuestionVote],
             // where: { isUpvote: true},
-            order: [
-                ["updatedAt", "DESC"]
-            ],
+            order: [["updatedAt", "DESC"]],
         });
 
         const questionVotes = await db.QuestionVote.findAll();
@@ -103,7 +101,7 @@ router.get(
 
 router.get(
     "/:id(\\d+)",
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId, {
             include: [db.User, db.QuestionVote],
@@ -112,9 +110,7 @@ router.get(
             where: {
                 questionId: question.id,
             },
-            order: [
-                ["createdAt", "ASC"]
-            ],
+            order: [["createdAt", "ASC"]],
         });
         if (!answers) answers.length = 0;
 
@@ -151,6 +147,35 @@ router.get(
         if (req.session.auth) {
             loggedInUser = req.session.auth.userId;
         }
+
+        //////paste/
+        // const thisQuestionVotes = await db.QuestionVote.findAll({
+        //     where: {
+        //         questionId: req.params.id,
+        //     },
+        //     // include: [db.QuestionVote],
+        // });
+        // const {type} = req.body;
+        // let hasVote = false;
+        // let questionVoteId;
+        // thisQuestionVotes.forEach((vote) => {
+        //     if ((vote.userId === req.session.auth.userId)) {
+        //         console.log("inside questionvotes iterating over:")
+        //         console.log("----------req.session.auth.userId", req.session.auth.userId)
+        //         console.log("----------vote.userId",vote.userId)
+        //         hasVote = true;
+        //         questionVoteId = vote.id;
+        //         if (hasVote) {
+        //             if(vote.isUpvote){
+
+        //             } else {
+
+        //             }
+        //         }
+
+        //     }
+        // });
+
         // let isQuestionUser = false;
         // console.log(res.locals.user.id);
         // console.log(question.id);
@@ -170,15 +195,15 @@ router.get(
 
 const questionValidators = [
     check("title")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for title")
-    .isLength({ min: 2, max: 100 })
-    .withMessage("Title must be between 2 and 100 characters"),
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide a value for title")
+        .isLength({ min: 2, max: 100 })
+        .withMessage("Title must be between 2 and 100 characters"),
     check("content")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide content for your question")
-    .isLength({ max: 2000 })
-    .withMessage("Max length 2000 characters, please be more concise"),
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide content for your question")
+        .isLength({ max: 2000 })
+        .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -187,7 +212,7 @@ router.post(
     requireAuth,
     restoreUser,
     questionValidators,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const { title, content } = req.body;
         //console.log('----------', req.body)
         const question = await db.Question.build({
@@ -227,7 +252,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -246,7 +271,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         console.log("You are here.");
         const questionId = parseInt(req.params.id, 10);
         const questionToUpdate = await db.Question.findByPk(questionId);
@@ -274,7 +299,7 @@ router.post(
             res.render("question-edit", {
                 formTitle: "Edit Question",
                 createdAt,
-                question: {...question, id: questionId },
+                question: { ...question, id: questionId },
                 errors,
                 csrfToken: req.csrfToken(),
             });
@@ -289,7 +314,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -307,7 +332,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
 
@@ -323,7 +348,7 @@ router.get(
     csrfProtection,
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const question = await db.Question.findByPk(questionId);
         res.render("answer-add", {
@@ -336,10 +361,10 @@ router.get(
 // move to questions route
 const answerValidators = [
     check("content")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide content for your answer")
-    .isLength({ max: 2000 })
-    .withMessage("Max length 2000 characters, please be more concise"),
+        .exists({ checkFalsy: true })
+        .withMessage("Please provide content for your answer")
+        .isLength({ max: 2000 })
+        .withMessage("Max length 2000 characters, please be more concise"),
 ];
 
 router.post(
@@ -348,7 +373,7 @@ router.post(
     requireAuth,
     restoreUser,
     answerValidators,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         const questionId = parseInt(req.params.id, 10);
         const { content } = req.body;
         //console.log('----------', req.body)
@@ -378,7 +403,7 @@ router.post(
     "/:id(\\d+)/vote",
     requireAuth,
     restoreUser,
-    asyncHandler(async(req, res) => {
+    asyncHandler(async (req, res) => {
         console.log("INSIDE THE ROUTER!!!");
         const questionVotes = await db.QuestionVote.findAll({
             where: {
@@ -386,38 +411,96 @@ router.post(
             },
             // include: [db.QuestionVote],
         });
-
-        console.log(questionVotes)
+        const { type } = req.body;
+        console.log(questionVotes);
         let hasVote = false;
+        let hasUpvote = false;
+        let hasDownvote = false;
         let questionVoteId;
         questionVotes.forEach((vote) => {
-            if ((vote.userId === req.session.auth.userId)) {
-                console.log("inside questionvotes iterating over:")
-                console.log("----------req.session.auth.userId", req.session.auth.userId)
-                console.log("----------vote.userId",vote.userId)
+            if (vote.userId === req.session.auth.userId) {
+                console.log("inside questionvotes iterating over:");
+                console.log(
+                    "----------req.session.auth.userId",
+                    req.session.auth.userId
+                );
+                console.log("----------vote.userId", vote.userId);
                 hasVote = true;
+
                 questionVoteId = vote.id;
+
+                if (vote.isUpvote) {
+                    hasUpvote = true;
+                } else {
+                    hasDownvote = true;
+                }
             }
         });
 
         // await answer.destroy();
         // console.log('you have arrived at the delete route: ', req.params.id)
         if (hasVote) {
-            console.log('inside if')
-            const thisVote = await db.QuestionVote.findByPk(questionVoteId);
-            await thisVote.destroy();
-            res.json({ message: "Removed" });
-        } else {
-            console.log('inside else')
+            if ((type === 'upvote' && hasUpvote) || (type === 'downvote' && hasDownvote)){
 
-            await db.QuestionVote.create({
-                userId: req.session.auth.userId,
-                questionId: req.params.id,
-                isUpvote: true,
-            });
+                console.log("inside if");
+                const thisVote = await db.QuestionVote.findByPk(questionVoteId);
+                await thisVote.destroy();
+                res.json({ message: "Removed" });
+            } else {
+                res.json({ message: "Cannot upvote and downvote"})
+            }
+
+        } else {
+            console.log("inside else");
+            if (type === "upvote") {
+                await db.QuestionVote.create({
+                    userId: req.session.auth.userId,
+                    questionId: req.params.id,
+                    isUpvote: true,
+                });
+            } else {
+                await db.QuestionVote.create({
+                    userId: req.session.auth.userId,
+                    questionId: req.params.id,
+                    isUpvote: false,
+                });
+            }
             res.json({ message: "Success" });
         }
     })
 );
+
+router.get("/:id(\\d+)/vote",
+requireAuth,
+restoreUser,
+asyncHandler(async (req, res) => {
+    const questionId = req.params.id;
+    const questionVotes = await db.QuestionVote.findAll({
+        where: {
+            questionId: req.params.id,
+        },
+        // include: [db.QuestionVote],
+    });
+    questionVotes.forEach((vote) => {
+        if (vote.userId === req.session.auth.userId) {
+            console.log("inside questionvotes iterating over:");
+            console.log(
+                "----------req.session.auth.userId",
+                req.session.auth.userId
+            );
+            console.log("----------vote.userId", vote.userId);
+            hasVote = true;
+
+            // questionVoteId = vote.id;
+
+            if (vote.isUpvote) {
+                res.send("upvote")
+            } else {
+                res.send("downvote")
+            }
+        }
+    });
+    res.send("none");
+}));
 
 module.exports = router;
