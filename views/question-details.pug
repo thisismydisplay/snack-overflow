@@ -37,7 +37,7 @@ block content
                   button(class="delete-answer-btn" id=`delete-answer-btn-${answer.id}`) Delete
                   form(class='hidden' id=`edit-answer-form-${answer.id}`)
                     label Content:
-                    input(type="text" name="content" value=answer.content id=`${answer.id}-edit-answer`)
+                    textarea(type="text" name="content" id=`${answer.id}-edit-answer`) #{answer.content}
                     button(class="edit-answer-submit" id=`edit-answer-submit-${answer.id}`) Submit Edit
       .answer-form-container
         .btn-container#post-answer-btn
