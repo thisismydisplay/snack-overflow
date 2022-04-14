@@ -15,7 +15,8 @@ block content
                         .vote-div
                             span.vote-span= `${voteCollection[`${question.id}vote`]}`
                         .answer-div
-                            span.answer-span= ` Answers`
+                            span(class=`num-answer-span` id=`span${question.id}`)= `${answerCollection[`${question.id}numAnswers`]}`
+                            span(class=`num-answer-label num-answer-label${question.id}`)  Answers
                     .title-content-div
                         .title-div
                             a(href=`/questions/${question.id}`): span.question-title-span= `${question.title}`

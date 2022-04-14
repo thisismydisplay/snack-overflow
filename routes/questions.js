@@ -26,30 +26,48 @@ router.get(
         });
 
         const questionVotes = await db.QuestionVote.findAll();
+        const answers = await db.Answer.findAll();
         const voteCollection = {};
+        const answerCollection = {};
         // console.log(questions)
-        questionVotes.forEach((questionVote) => {
-            // const question = await db.Question.findByPk(questionVote.questionId)
 
+        //iterate through QuestionVotes to track number of votes for each question
+        questionVotes.forEach((questionVote) => {
+
+            //if voteCollection does not have key for question, create key with value 0;
             if (!voteCollection[`${questionVote.questionId}vote`]) {
                 voteCollection[`${questionVote.questionId}vote`] = 0;
             }
+
+            //increment the question's vote count if upvote, decrement if downvote
             if (questionVote.isUpvote === true) {
                 voteCollection[`${questionVote.questionId}vote`] += 1;
             } else {
                 voteCollection[`${questionVote.questionId}vote`] -= 1;
             }
-            // console.log("************", question)
 
-            // console.log("---------" , questionVote.Question)
-            // console.log("Question upvotes: ", questionVote.Question.upvotes)
         });
+
+        //iterate through answers to track number of answers for each question
+        answers.forEach((answer) =>{
+
+            //if answerCollection does not have key for question, create key with value 1
+            if (!answerCollection[`${answer.questionId}numAnswers`]){
+                answerCollection[`${answer.questionId}numAnswers`] = 1;
+            }
+            //if key exists increment by 1
+            else {
+                answerCollection[`${answer.questionId}numAnswers`] += 1;
+            }
+
+        })
         // res.send("ok")
         console.log("vote collection ", voteCollection);
         res.render("questions", {
             title: "Top Questions",
             questions,
             voteCollection,
+            answerCollection,
         });
     })
 
