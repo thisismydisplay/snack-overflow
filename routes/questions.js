@@ -374,7 +374,7 @@ router.post(
     })
 );
 
-router.put(
+router.post(
     "/:id(\\d+)/vote",
     requireAuth,
     restoreUser,
@@ -386,27 +386,36 @@ router.put(
             },
             // include: [db.QuestionVote],
         });
+
+        console.log(questionVotes)
         let hasVote = false;
+        let questionVoteId;
         questionVotes.forEach((vote) => {
-            if ((vote.userId = req.session.auth.userId)) {
+            if ((vote.userId === req.session.auth.userId)) {
+                console.log("inside questionvotes iterating over:")
+                console.log("----------req.session.auth.userId", req.session.auth.userId)
+                console.log("----------vote.userId",vote.userId)
                 hasVote = true;
-                let questionVoteId = vote.id;
+                questionVoteId = vote.id;
             }
         });
 
         // await answer.destroy();
         // console.log('you have arrived at the delete route: ', req.params.id)
         if (hasVote) {
+            console.log('inside if')
             const thisVote = await db.QuestionVote.findByPk(questionVoteId);
             await thisVote.destroy();
-            res.json({ message: "Vote Removed" });
+            res.json({ message: "Removed" });
         } else {
-            const newVote = await db.create({
+            console.log('inside else')
+
+            await db.QuestionVote.create({
                 userId: req.session.auth.userId,
                 questionId: req.params.id,
                 isUpvote: true,
             });
-            res.json({ message: "Vote Success" });
+            res.json({ message: "Success" });
         }
     })
 );

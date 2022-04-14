@@ -9,7 +9,7 @@ block content
       .question-container
         .main-container
           .sidebar-container
-            a(href=`/questions/${question.id}/vote`): div(class=`vote-button upvote-button question-upvote-button` id=`upvote-question-${question.id}`)
+            div(class=`vote-button upvote-button question-upvote-button` id=`upvote-question-${question.id}`)
             span.vote-count-span.vote-span.question-votes #{votes}
             a(href="#"): div(class=`vote-button downvote-button question-downvote-button` id=`downvote-question-${question.id}`)
           .content-container

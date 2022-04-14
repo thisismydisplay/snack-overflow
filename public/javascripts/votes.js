@@ -24,16 +24,18 @@ document.addEventListener("DOMContentLoaded", async() => {
         answerVotesEle.innerText = "1 Answer";
     }
 
-    const votes = document.querySelectorAll("vote-button");
+    const votes = document.querySelectorAll(".vote-button");
     votes.forEach((vote) => {
         vote.addEventListener("click", async(e) => {
-            if (vote.classList.includes("question-upvote-button")) {
-                const questionId = e.target.split("-")[2];
+            if (vote.classList.contains("question-upvote-button")) {
+                const questionId = e.target.id.split("-")[2];
                 console.log("FETCH!!!");
                 const res = await fetch(`/questions/${questionId}/vote`, {
-                    method: "PUT",
+                    method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ vote.value })
+                    body: JSON.stringify({
+                        type: "upvote",
+                    }),
                 });
                 console.log("AFTER FETCH!!!");
                 const data = await res.json();
@@ -62,21 +64,21 @@ document.addEventListener("DOMContentLoaded", async() => {
                     e.target.style.backgroundColor = "#696F75";
                 }
             }
-            if (vote.classList.includes("question-downvote-button")) {
+            if (vote.classList.contains("question-downvote-button")) {
                 const questionId = e.target.split("-")[2];
                 const res = await fetch(`/questions/${questionId}/vote`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
             }
-            if (vote.classList.includes("answer-upvote-button")) {
+            if (vote.classList.contains("answer-upvote-button")) {
                 const answerId = e.target.split("-")[2];
                 const res = await fetch(`/answers/${answerId}/vote`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                 });
             }
-            if (vote.classList.includes("answer-downvote-button")) {
+            if (vote.classList.contains("answer-downvote-button")) {
                 const answerId = e.target.split("-")[2];
                 const res = await fetch(`/answers/${answerId}/vote`, {
                     method: "POST",
