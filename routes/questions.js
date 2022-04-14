@@ -49,10 +49,10 @@ router.get(
         });
 
         //iterate through answers to track number of answers for each question
-        answers.forEach((answer) =>{
+        answers.forEach((answer) => {
 
             //if answerCollection does not have key for question, create key with value 1
-            if (!answerCollection[`${answer.questionId}numAnswers`]){
+            if (!answerCollection[`${answer.questionId}numAnswers`]) {
                 answerCollection[`${answer.questionId}numAnswers`] = 1;
             }
             //if key exists increment by 1
@@ -159,6 +159,7 @@ router.get(
         res.render("question-details", {
             question,
             // isQuestionUser,
+            title: question.title,
             loggedInUser,
             votes: voteCollection[`${question.id}vote`],
             answers,

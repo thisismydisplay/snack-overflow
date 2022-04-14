@@ -27,4 +27,13 @@ html
           a(class='nav-btn' href='/users/login') Login
           a(class='nav-btn' href='/users/register') Register
     .container
-    block content
+      div.body-content-container
+        .body-header-content
+          .left-sidebar-header
+          .center-header
+            .title-container
+              span#header-title #{title}
+            .btn-container
+              a(href='/questions/add' method='GET'): button.ask-button Ask Question
+          .right-sidebar-header
+        block content
