@@ -4,6 +4,7 @@ include utils.pug
 
 block content
   link(rel='stylesheet' href='/stylesheets/questions.css')
+
   div.body-content-container
     .body-header-content
       .title-container
@@ -33,13 +34,9 @@ block content
               p#answer-text #{answer.content}
             .sidebar-container
               button.vote-button.upvote-button
-                  //- NEED TO REFACTOR so that answers with 0 votes
-                  //- display 0 instead of undefined
-                  //- if (`${answerVotesCollection[`${answer.id}vote`]}`
-                  //-   span.vote-span 0
-                  //- else
               span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
               button.vote-button.downvote-button
     .answer-form-container
       .btn-container#post-answer-btn
-        a(href='/answers/add' method='GET'): button.post-answer-button Post Your Answer
+        a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
+  script(src="/javascripts/votes.js")
