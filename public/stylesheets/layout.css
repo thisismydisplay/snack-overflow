@@ -2,8 +2,12 @@ body {
     width: max-content;
 }
 
+.body-content-container {
+
+}
+
 #nav-wrapper {
-    width: inherit;
+    width: auto;
     border-top: 3px solid #ed7a1c;
     border-bottom: 1px solid lightgray;
     display: block;
@@ -61,12 +65,13 @@ body {
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: sticky;
     background-color: #fcfcfc;
     height: 47px;
-    width: inherit;
+    width: 99vw;
     padding: 0px 5px;
+
 }
 
 .nav-btn {
@@ -74,8 +79,8 @@ body {
 }
 
 #navbar-right {
-    width: inherit;
-    margin-left: 800px;
+    width: auto;
+    /* margin-left: 800px; */
 }
 
 #logo {
@@ -89,14 +94,15 @@ body {
 
 #navbar-center {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     border: 0.25px black solid;
     border-radius: 2.5px;
     padding: 2px;
     /* min-width: max-content; */
-    width: inherit;
-    margin-left: 200px;
+    width: auto;
+    max-width: 900px;
+    /* margin-left: 200px; */
 }
 
 #searchbar-input[type="search"] {
@@ -116,5 +122,5 @@ body {
     display: flex;
     justify-content: flex=start;
     align-items: flex-start;
-    width: inherit;
+    width: auto;
 }
