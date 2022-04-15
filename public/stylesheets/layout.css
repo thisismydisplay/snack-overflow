@@ -4,23 +4,21 @@ body {
 
 #nav-wrapper {
     width: inherit;
-    border-top: 3px solid #ED7A1C;
+    border-top: 3px solid #ed7a1c;
     border-bottom: 1px solid lightgray;
     display: block;
     /* padding: 10px; */
-
 }
 
 .container {
-
-    background-color: red;
+    /* background-color: red; */
     margin: none;
 }
 
 .center-header {
     display: flex;
-    justify-content: center;
-    width: 940px;
+    justify-content: space-between;
+    width: 100%;
     background-color: white;
 }
 
@@ -28,7 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: auto;
 }
 
 .btn-container {
@@ -49,7 +47,7 @@ body {
     /* top: 10%; */
     /* left: 50%; */
     /* transform: translate(-50%, -50%); */
-    border-bottom: #555555 solid 2.5px;
+    /* border-bottom: #555555 solid 2.5px; */
     padding-bottom: 3px;
     line-height: 1.15384615;
     box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
@@ -57,6 +55,7 @@ body {
     border-radius: 3px;
     cursor: pointer;
     margin-right: 400px;
+    margin-left: 75px;
 }
 
 .navbar {
@@ -107,7 +106,6 @@ body {
     transition: width 0.4s ease-in-out;
     background-position: 10px 10px;
     background-repeat: no-repeat;
-
 }
 
 #searchbar-input[type="search"]:focus {
