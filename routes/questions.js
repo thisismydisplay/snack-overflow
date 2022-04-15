@@ -271,6 +271,7 @@ router.post(
     csrfProtection,
     requireAuth,
     restoreUser,
+    questionValidators,
     asyncHandler(async (req, res) => {
         console.log("You are here.");
         const questionId = parseInt(req.params.id, 10);
@@ -388,9 +389,11 @@ router.post(
             res.redirect(`/questions/${questionId}`);
         } else {
             const errors = validatorErrors.array().map((error) => error.msg);
+            const question = {id: questionId}
             res.render("answer-add", {
                 formTitle: "Add Answer",
                 content: answer.content,
+                question,
                 answer,
                 errors,
                 csrfToken: req.csrfToken(),
