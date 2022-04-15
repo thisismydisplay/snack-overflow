@@ -25,6 +25,14 @@ module.exports = {
       */
         return queryInterface.bulkInsert("Users", [
             {
+                username: "Demo-User",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "demo@demo.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
                 username: "Ara",
                 hashedPassword:
                     "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
@@ -53,14 +61,6 @@ module.exports = {
                 hashedPassword:
                     "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
                 email: "mark@mark.com",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            },
-            {
-                username: "Demo",
-                hashedPassword:
-                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
-                email: "demo@demo.com",
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
