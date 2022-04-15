@@ -40,6 +40,27 @@ module.exports = {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
+                {
+                    title: "Is Chinese food really tasty?",
+                    content: `Leo won't shut up about it and I'm getting really annoyed. Please tell me!!!!!!!!!`,
+                    userId: 5,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+                {
+                    title: 'How do I make a chicken sandwich?',
+                    content: `I'm trying to make a chicken sandwich but I can't figure out how to do it. Please help!`,
+                    userId: 3,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+                {
+                    title: "Why is Hoon so mean to you?",
+                    content: `Hoon is so mean to me. I don't know why.`,
+                    userId: 6,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                }
             ],
             {}
         );
