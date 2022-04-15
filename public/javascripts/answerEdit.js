@@ -1,4 +1,4 @@
-// document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
     const editBtns = document.querySelectorAll(".edit-answer-btn");
 
     for (let i = 0; i < editBtns.length; i++) {
@@ -13,29 +13,32 @@
             );
 
             //create hidden element to hold validation errors and append to form
-            const deleteBtn = document.querySelector(`#delete-answer-btn-${answerId}`)
+            const deleteBtn = document.querySelector(
+                `#delete-answer-btn-${answerId}`
+            );
             deleteBtn.classList.add("hidden");
-
 
             // e.target.innerText = 'Cancel';
 
-            const cancelBtn = document.createElement('button');
+            const cancelBtn = document.createElement("button");
             cancelBtn.classList.add("edit-button");
-            cancelBtn.innerText = 'Cancel'
-            const btnContainer = form.querySelector('.answer-form-button-container')
-            btnContainer.appendChild(cancelBtn)
+            cancelBtn.innerText = "Cancel";
+            const btnContainer = form.querySelector(
+                ".answer-form-button-container"
+            );
+            btnContainer.appendChild(cancelBtn);
+
             const error = document.createElement("p");
             form.appendChild(error);
             error.classList.add("answererror", "hidden");
             // display form on click
             if (form.classList.contains("hidden")) {
                 form.classList.remove("hidden");
-                e.target.classList.add("hidden") //?
+                e.target.classList.add("hidden"); //?
             } else {
                 form.classList.add("hidden");
-                deleteBtn.classList.remove("hidden");  //second click hides edit form
+                deleteBtn.classList.remove("hidden"); //second click hides edit form
                 // e.target.innerText = 'Edit';
-
             }
 
             const submitBtn = document.getElementById(
@@ -44,12 +47,11 @@
 
             submitBtn.addEventListener("click", async (submitEvent) => {
                 submitEvent.preventDefault();
-
+                // cancelBtn.preventDefault();
                 //if an error was generated on page followed by a successful edit,
                 //this prevents the error element from appearing if another edit
                 //is made before refreshing the page
-                document.querySelector(".answererror").classList.add("hidden")
-
+                document.querySelector(".answererror").classList.add("hidden");
 
                 const content = document.getElementById(
                     `${answerId}-edit-answer`
@@ -73,7 +75,7 @@
                     contentElement.innerHTML = data.answer.content;
                     form.classList.add("hidden");
                     deleteBtn.classList.remove("hidden");
-                    e.target.classList.remove("hidden") //?
+                    e.target.classList.remove("hidden"); //?
                     cancelBtn.remove();
                 } else {
                     // create elements with error message
@@ -86,4 +88,4 @@
             });
         });
     }
-// });
+});
