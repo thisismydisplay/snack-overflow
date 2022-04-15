@@ -1,10 +1,9 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const db = require("../db/models");
-const { csrfProtection, asyncHandler, checkPermissions } = require("./utils");
+const { asyncHandler } = require("./utils");
 const { requireAuth, restoreUser } = require("../auth");
 const res = require("express/lib/response");
-//const sequelize = require("sequelize");
 
 const router = express.Router();
 
@@ -20,11 +19,14 @@ router.put(
     "/:id(\\d+)",
     answerValidators,
     asyncHandler(async (req, res) => {
-        // console.log('from put route handler: ', req.body)
+        // get answer from database
         const answer = await db.Answer.findByPk(req.params.id);
-        // const {content} = req.body;
+
+        // validate answer
         const validatorErrors = validationResult(req);
+
         if (validatorErrors.isEmpty()) {
+            // save new content and send response json
             answer.content = req.body.content;
             await answer.save();
             res.json({
@@ -32,6 +34,7 @@ router.put(
                 answer,
             });
         } else {
+            // send errs
             const errors = validatorErrors.array().map((error) => error.msg);
             res.json({
                 message: "Invalid content - must have text",
@@ -42,10 +45,9 @@ router.put(
 );
 
 router.delete('/:id(\\d+)', asyncHandler(async(req, res) => {
+    // get answer from database and destroy it
     const answer = await db.Answer.findByPk(req.params.id)
-
     await answer.destroy()
-    // console.log('you have arrived at the delete route: ', req.params.id)
     res.json({message: 'Success'})
 }))
 
@@ -54,27 +56,22 @@ router.post(
     requireAuth,
     restoreUser,
     asyncHandler(async (req, res) => {
-
+        // get answerVotes from database
         const answerVotes = await db.AnswerVote.findAll({
             where: {
                 answerId: req.params.id,
             },
-            // include: [db.QuestionVote],
         });
         const { type } = req.body;
-        console.log(answerVotes);
         let hasVote = false;
         let hasUpvote = false;
         let hasDownvote = false;
         let answerVoteId;
+
+        //iterate over answerVotes
         answerVotes.forEach((vote) => {
             if (vote.userId === req.session.auth.userId) {
-                console.log("inside questionvotes iterating over:");
-                console.log(
-                    "----------req.session.auth.userId",
-                    req.session.auth.userId
-                );
-                console.log("----------vote.userId", vote.userId);
+                // flag vote as belonging to logged in user
                 hasVote = true;
 
                 answerVoteId = vote.id;
@@ -87,12 +84,9 @@ router.post(
             }
         });
 
-        // await answer.destroy();
-        // console.log('you have arrived at the delete route: ', req.params.id)
         if (hasVote) {
+            // delete vote if it user is removing an existing vote
             if ((type === 'upvote' && hasUpvote) || (type === 'downvote' && hasDownvote)){
-
-                console.log("inside if");
                 const thisVote = await db.AnswerVote.findByPk(answerVoteId);
                 await thisVote.destroy();
                 res.json({ message: "Removed" });
@@ -101,7 +95,7 @@ router.post(
             }
 
         } else {
-            console.log("inside else");
+            // create vote if vote is new
             if (type === "upvote") {
                 await db.AnswerVote.create({
                     userId: req.session.auth.userId,
@@ -124,25 +118,19 @@ router.get("/:id(\\d+)/vote",
 requireAuth,
 restoreUser,
 asyncHandler(async (req, res) => {
-    console.log("INSIDE THE GET ANSWERROUTER!!!");
     const answerId = req.params.id;
+
+    // get answerVotes from database
     const answerVotes = await db.AnswerVote.findAll({
         where: {
             answerId: req.params.id,
         },
-        // include: [db.QuestionVote],
     });
+
+    // send vote type as response
     let aType = 'none';
     answerVotes.forEach((vote) => {
         if (vote.userId === req.session.auth.userId) {
-            console.log("inside answervotes iterating over:");
-            console.log(
-                "----------req.session.auth.userId",
-                req.session.auth.userId
-            );
-            console.log("----------vote.userId", vote.userId);
-            hasVote = true;
-
             if (vote.isUpvote) {
                 aType = "upvote"
             } else if (!vote.isUpvote) {

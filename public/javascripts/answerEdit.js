@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 const content = document.getElementById(
                     `${answerId}-edit-answer`
                 ).value;
-                //fetch answers/:id PUT route
+                //fetch answers/:id PUT route to change answer in database
                 const res = await fetch(`/answers/${answerId}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -70,68 +70,3 @@ document.addEventListener("DOMContentLoaded", (e) => {
 });
 
 
-// // changed this from the anonymous above function because passing answerId
-// // through submitEvent and using submitEvent.currentTarget.answerId
-// // fixed a weird bug(?) where every resubmission of an empty
-// // edit would generate more fetches (if someone does multiple edits
-// // and continues submitting empty in between)
-// // HOWEVER, ABOVE IS MORE READABLE AND ISSUE HAS NEGLIGIBLE EFFECT ON PERFORMANCE
-
-// document.addEventListener("DOMContentLoaded", (e) =>{
-
-// const editBtns = document.querySelectorAll(".edit-answer-btn");
-
-// async function submitEdit(submitEvent) {
-//     let answerId = submitEvent.currentTarget.answerId;
-//     submitEvent.preventDefault();
-//     const content = document.getElementById(`${answerId}-edit-answer`).value;
-//     const res = await fetch(`/answers/${answerId}`, {
-//         method: "PUT",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({
-//             content,
-//         }),
-//     });
-
-//     const data = await res.json();
-
-//     const form = document.getElementById(`edit-answer-form-${answerId}`);
-
-//     if (data.message === "Success") {
-//         const contentElement = document.getElementById(
-//             `${answerId}-answer-text`
-//         );
-//         contentElement.innerHTML = data.answer.content;
-//         form.classList.add("hidden");
-//     } else {
-//         // create elements with error message
-
-//         const error = document.querySelector(".answererror")
-//         error.classList.remove("hidden");
-//         error.innerHTML = data.message;
-//     }
-// }
-// for (let i = 0; i < editBtns.length; i++) {
-//     const btn = editBtns[i];
-//     btn.addEventListener("click", (e) => {
-//         const answerId = e.target.id.split("-")[3];
-//         const form = document.getElementById(`edit-answer-form-${answerId}`);
-//         const error = document.createElement("p");
-//         form.appendChild(error);
-//         error.classList.add("answererror");
-//         // const error2 = document.querySelector(".answererror")
-//         // console.log(error2)
-//         if (form.classList.contains("hidden")) {
-//             form.classList.remove("hidden");
-//         } else {
-//             form.classList.add("hidden");
-//         }
-//         console.log("hi)");
-//         const submitBtn = document.getElementById(
-//             `edit-answer-submit-${answerId}`
-//         );
-//         submitBtn.answerId = answerId;
-//         submitBtn.addEventListener("click", submitEdit);
-//     });
-// }
-// })
