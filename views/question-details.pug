@@ -25,10 +25,10 @@ block content
           each answer in answers
             div(id= `answer-${answer.id}` class="answer-container")
               .main-container
-                .sidebar-container
-                  a(href="#"): div(class=`vote-button upvote-button` id=`upvote-answer-${answer.id}`)
-                  span(class=`vote-span answer-vote-span answer-${answerId}-vote-span`)= `${answerVotesCollection[`${answer.id}vote`]}`
-                  a(href="#"): div(class=`vote-button downvote-button` id=`downvote-answer-${answer.id}`)
+                div(class=`sidebar-container answer-sidebar-container` id=`answer-vote-container-${answer.id}`)
+                  a(href="#"): div(class=`vote-button upvote-button answer-upvote-button` id=`upvote-answer-${answer.id}`)
+                  span(class=`vote-span answer-vote-span answer-${answer.id}-vote-span`)= `${answerVotesCollection[`${answer.id}vote`]}`
+                  a(href="#"): div(class=`vote-button downvote-button answer-downvote-button` id=`downvote-answer-${answer.id}`)
                 .content-container
                   p(id=`${answer.id}-answer-text`) #{answer.content}
               .button-container
@@ -43,6 +43,7 @@ block content
         .btn-container#post-answer-btn
           a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
     .body-sidebar-right
+
     script(src="/javascripts/votes.js")
     script(src="/javascripts/answerEdit.js")
     script(src="/javascripts/answerDelete.js")

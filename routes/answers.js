@@ -49,4 +49,109 @@ router.delete('/:id(\\d+)', asyncHandler(async(req, res) => {
     res.json({message: 'Success'})
 }))
 
+router.post(
+    "/:id(\\d+)/vote",
+    requireAuth,
+    restoreUser,
+    asyncHandler(async (req, res) => {
+
+        const answerVotes = await db.AnswerVote.findAll({
+            where: {
+                answerId: req.params.id,
+            },
+            // include: [db.QuestionVote],
+        });
+        const { type } = req.body;
+        console.log(answerVotes);
+        let hasVote = false;
+        let hasUpvote = false;
+        let hasDownvote = false;
+        let answerVoteId;
+        answerVotes.forEach((vote) => {
+            if (vote.userId === req.session.auth.userId) {
+                console.log("inside questionvotes iterating over:");
+                console.log(
+                    "----------req.session.auth.userId",
+                    req.session.auth.userId
+                );
+                console.log("----------vote.userId", vote.userId);
+                hasVote = true;
+
+                answerVoteId = vote.id;
+
+                if (vote.isUpvote) {
+                    hasUpvote = true;
+                } else {
+                    hasDownvote = true;
+                }
+            }
+        });
+
+        // await answer.destroy();
+        // console.log('you have arrived at the delete route: ', req.params.id)
+        if (hasVote) {
+            if ((type === 'upvote' && hasUpvote) || (type === 'downvote' && hasDownvote)){
+
+                console.log("inside if");
+                const thisVote = await db.AnswerVote.findByPk(answerVoteId);
+                await thisVote.destroy();
+                res.json({ message: "Removed" });
+            } else {
+                res.json({ message: "Cannot upvote and downvote"})
+            }
+
+        } else {
+            console.log("inside else");
+            if (type === "upvote") {
+                await db.AnswerVote.create({
+                    userId: req.session.auth.userId,
+                    answerId: req.params.id,
+                    isUpvote: true,
+                });
+            } else {
+                await db.AnswerVote.create({
+                    userId: req.session.auth.userId,
+                    answerId: req.params.id,
+                    isUpvote: false,
+                });
+            }
+            res.json({ message: "Success" });
+        }
+    })
+);
+
+router.get("/:id(\\d+)/vote",
+requireAuth,
+restoreUser,
+asyncHandler(async (req, res) => {
+    console.log("INSIDE THE GET ANSWERROUTER!!!");
+    const answerId = req.params.id;
+    const answerVotes = await db.AnswerVote.findAll({
+        where: {
+            answerId: req.params.id,
+        },
+        // include: [db.QuestionVote],
+    });
+    let aType = 'none';
+    answerVotes.forEach((vote) => {
+        if (vote.userId === req.session.auth.userId) {
+            console.log("inside answervotes iterating over:");
+            console.log(
+                "----------req.session.auth.userId",
+                req.session.auth.userId
+            );
+            console.log("----------vote.userId", vote.userId);
+            hasVote = true;
+
+            if (vote.isUpvote) {
+                aType = "upvote"
+            } else if (!vote.isUpvote) {
+                aType = "downvote"
+            }
+        }
+    });
+    res.json({aType});
+}));
+
+
 module.exports = router;
