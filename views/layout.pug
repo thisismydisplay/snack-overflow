@@ -26,9 +26,10 @@ html
             form(class='form-inline' action='/users/logout' method='post')
               button(class='nav-btn' type='submit') Logout
           else
-            a(class='nav-btn' href='/users/login') off
-            button(class='demo-btn') Demo User
+            a(class='nav-btn' href='/users/login') Login
             a(class='nav-btn' href='/users/register') Register
+            form(action='/users/login/demo' method='post' class='login-form demo-login-form')
+              button(type='submit' class='nav-btn demo-btn') Demo User
     .container
       div.body-content-container
         .body-header-content
