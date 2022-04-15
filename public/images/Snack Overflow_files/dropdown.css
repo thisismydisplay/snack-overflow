@@ -1,0 +1,70 @@
+/* .searchbar-input:hover,
+.searchbar-input:focus {
+    background-color: rgb(100, 13, 13);
+}
+
+.dropDownContent {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgb(100, 13, 13);
+    top: 150px;
+    background-color: lightgrey;
+    color: aliceblue;
+}
+
+.dropDownContent::-webkit-scrollbar {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    padding: 12px 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+
+.dropDownContent::-webkit-scrollbar-thumb {
+    background: black;
+    border: white 0.01px solid;
+    border-radius: 2px;
+}
+
+.searchbar-input-container {
+    display: flex;
+    flex-direction: column;
+} */
+
+.sDropDown {
+    width: 300px;
+    height: 200px;
+    border: 1px solid black;
+    position: absolute;
+    top: 36px;
+    left: 407px;
+    background-color: white;
+    display: none;
+}
+
+.dropDownContent {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.dropDownContent>a {
+    height: 78px;
+    border-bottom: 0.5px dashed gray;
+    padding: 7px;
+    margin: 10px;
+}
+
+.show {
+    display: block;
+
+}

@@ -12,6 +12,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const questionsRouter = require("./routes/questions");
 const answersRouter = require("./routes/answers")
+const searchRouter = require("./routes/search");
 
 const app = express();
 
@@ -44,15 +45,16 @@ app.use("/", questionsRouter);
 app.use("/users", usersRouter);
 app.use("/questions", questionsRouter);
 app.use("/answers", answersRouter);
+app.use('/search', searchRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     // res.send("test");
     next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};

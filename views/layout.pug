@@ -8,6 +8,7 @@ html
       link(rel='stylesheet' href='/stylesheets/question-form.css')
       link(rel='stylesheet' href='/stylesheets/questions.css')
       link(rel='stylesheet' href='/stylesheets/questiondetails.css')
+      link(rel='stylesheet' href='/stylesheets/dropdown.css')
       link(rel='icon' type='image/x-icon' href='/images/snackfavicon.png')
   body
     div#nav-wrapper
@@ -18,13 +19,15 @@ html
           div(class='searchbar-icon-container')
             img(src='https://www.seekpng.com/png/full/12-123945_search-simple-instagram-search-icon-free.png')#search-icon
           div(class='searchbar-input-container')
-            input(type='search' placeholder='Search...' id='searchbar-input')
+            input(type='search' placeholder='Search...' id='searchbar-input' autocomplete='off')
+            include includes/dropdown.pug
         nav(id='navbar-right')
           if locals.authenticated
             form(class='form-inline' action='/users/logout' method='post')
               button(class='nav-btn' type='submit') Logout
           else
-            a(class='nav-btn' href='/users/login') Login
+            a(class='nav-btn' href='/users/login') off
+            button(class='demo-btn') Demo User
             a(class='nav-btn' href='/users/register') Register
     .container
       div.body-content-container
@@ -37,3 +40,5 @@ html
               a(href='/questions/add' method='GET'): button.ask-button Ask Question
           .right-sidebar-header
         block content
+script(src="/javascripts/search.js" type='module')
+script(src='/javascripts/demo.js' type='module')
