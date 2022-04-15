@@ -1,6 +1,6 @@
 <h1 align="center">:popcorn: Snack Overflow :popcorn:</h1>
 
-<h3 align="center"> :building_construction: https://snack-overflow-premium.herokuapp.com :building_construction:</h3> 
+<h3 align="center"> :building_construction: https://snack-overflow-premium.herokuapp.com :building_construction:</h3>
 
 Snack Overflow is the best place on the web to learn about snacks. Sign-up to learn more about you favorites or ask any questions!
 
@@ -32,8 +32,6 @@ Snack Overflow Premium is a full-snack application to read and learn about all o
 [Dedition](https://github.com/Dedition)
 
 [haywood-d-johnson](https://github.com/haywood-d-johnson)
-
-
 
 
 
