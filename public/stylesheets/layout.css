@@ -2,9 +2,13 @@ body {
     width: max-content;
 }
 
+<<<<<<< HEAD
+.body-content-container {}
+=======
 
 .body-content-container {}
 
+>>>>>>> aa489fd6a0e16117f5062890f1006763ce3d3100
 
 #nav-wrapper {
     width: auto;
