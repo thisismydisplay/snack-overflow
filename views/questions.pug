@@ -1,4 +1,5 @@
 extends layout.pug
+
 block content
   .question-list-container
     each question in questions
@@ -21,4 +22,5 @@ block content
             .modified-div
             span.modified-span= `created ${question.createdAt}`
           hr
+  include includes/footer.pug
   script(src="/javascripts/votes-question-list.js")
