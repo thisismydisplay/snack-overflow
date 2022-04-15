@@ -6,12 +6,15 @@ block content
   +validationErrorSummary(errors)
   form(action='/users/login' method='post' class='login-form')
     input(type='hidden' name='_csrf' value=csrfToken)
-    label(for='email') Email:
-    input(type='email' name='email' id='login-email' value=email)
-    label(for='password') Password:
-    input(type='password' name='password' id='login-password')
-    div(class='py-4')
-      button(type='submit') Login
-      a(href='/') Cancel
-  div
+    div.login-page-form
+      div.login-email
+        label(for='email') Email:
+        input(type='email' name='email' id='login-email' value=email)
+      div.login-password
+        label(for='password') Password:
+        input(type='password' name='password' id='login-password')
+      div(class='login-cancel-button')
+        button(type='submit' class="login-button") Login
+        a(href='/' class="cancel-button") Cancel
+  div.login-create-account
     p: a(href='/users/register') Don't have an account?

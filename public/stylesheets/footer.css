@@ -1,4 +1,4 @@
-ul > li {
+ul>li {
     list-style: none;
 }
 
@@ -37,4 +37,12 @@ a {
 .leo-github {
     padding-top: 0.25rem;
     padding: 0.5rem;
+}
+
+.footer-icon-container {
+    padding: 0.5rem;
+}
+
+.footer-icon-container a:hover {
+    color: #ed7a1c;
 }
