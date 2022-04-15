@@ -33,8 +33,13 @@ block content
                   p(id=`${answer.id}-answer-text`) #{answer.content}
               .button-container
                 if loggedInUser === answer.userId
-                  button(class="edit-answer-btn" id=`edit-answer-btn-${answer.id}`) Edit
-                  button(class="delete-answer-btn" id=`delete-answer-btn-${answer.id}`) Delete
+                  button(class=`edit-answer-btn modify-answer-btns-${answer.id}` id=`edit-answer-btn-${answer.id}`) Edit
+                  button(class=`delete-answer-btn modify-answer-btns-${answer.id}` id=`delete-answer-btn-${answer.id}`) Delete
+                  div(class=`hidden confirm-modal confirm-modal-${answer.id}` id=`confirm-delete-modal-${answer.id}`)
+                    .modal-content
+                      span.modal-confirm Yes, delete my answer
+                      span.modal-cancel No, cancel
+
                   form(class='hidden' id=`edit-answer-form-${answer.id}`)
                     label Content:
                     textarea(type="text" name="content" id=`${answer.id}-edit-answer`) #{answer.content}
