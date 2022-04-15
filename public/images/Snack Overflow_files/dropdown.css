@@ -41,21 +41,20 @@
 .sDropDown {
     width: 300px;
     height: 200px;
-    border: .25px solid black;
+    border: 1px solid black;
     position: absolute;
     top: 36px;
     left: 407px;
     background-color: white;
-    border-radius: 5px;
+    display: none;
 }
 
 .dropDownContent {
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     height: 200px;
-    border-radius: 5px;
 }
 
 .dropDownContent>a {
@@ -63,15 +62,9 @@
     border-bottom: 0.5px dashed gray;
     padding: 7px;
     margin: 10px;
-    text-decoration: none;
 }
 
-.dropDownContent>a:hover {
-    background-color: black;
-    color: white;
-}
-
-.hidden {
-    display: none;
+.show {
+    display: block;
 
 }

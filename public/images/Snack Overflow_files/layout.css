@@ -1,0 +1,122 @@
+body {
+    width: max-content;
+}
+
+#nav-wrapper {
+    width: inherit;
+    border-top: 3px solid #ED7A1C;
+    border-bottom: 1px solid lightgray;
+    display: block;
+    /* padding: 10px; */
+
+}
+
+.container {
+
+    background-color: red;
+    margin: none;
+}
+
+.center-header {
+    display: flex;
+    justify-content: center;
+    width: 940px;
+    background-color: white;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* margin-left: 100px; */
+}
+
+#header-title {
+    font-size: 1.75rem;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: fit-content; */
+    /* position: absolute; */
+    /* top: 10%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    border-bottom: #555555 solid 2.5px;
+    padding-bottom: 3px;
+    line-height: 1.15384615;
+    box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
+    /* border: 1px solid transparent; */
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 400px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    background-color: #fcfcfc;
+    height: 47px;
+    width: inherit;
+    padding: 0px 5px;
+}
+
+.nav-btn {
+    margin-right: 100px;
+}
+
+#navbar-right {
+    width: inherit;
+    margin-left: 800px;
+}
+
+#logo {
+    height: 30px;
+    width: auto;
+}
+
+#search-icon {
+    width: 1rem;
+}
+
+#navbar-center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 0.25px black solid;
+    border-radius: 2.5px;
+    padding: 2px;
+    /* min-width: max-content; */
+    width: inherit;
+    margin-left: 200px;
+}
+
+#searchbar-input[type="search"] {
+    border: none;
+    width: 100px;
+    outline: none;
+    transition: width 0.4s ease-in-out;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+
+}
+
+#searchbar-input[type="search"]:focus {
+    width: 300px;
+}
+
+.searchbar-input-container {
+    display: flex;
+    justify-content: flex=start;
+    align-items: flex-start;
+    width: inherit;
+}

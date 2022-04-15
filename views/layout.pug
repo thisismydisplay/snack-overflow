@@ -27,6 +27,7 @@ html
               button(class='nav-btn' type='submit') Logout
           else
             a(class='nav-btn' href='/users/login') Login
+            a(class='demo-btn' href='/questions') Demo User
             a(class='nav-btn' href='/users/register') Register
     .container
       div.body-content-container
@@ -40,10 +41,3 @@ html
           .right-sidebar-header
         block content
 script(src="/javascripts/search.js" type='module')
-
-//- element.style {
-//-   display: flex;
-//-   flex-direction: column;
-//-   position: relative;
-//-   top: 150px;
-//- }

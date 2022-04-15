@@ -1,0 +1,134 @@
+body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    background-color: whitesmoke;
+}
+
+.vote-button {
+    /* display: inline-block; */
+    /* overflow: hidden; */
+    width: 40px;
+    height: 25px;
+    /* background-position: 0 -25px; */
+    cursor: pointer;
+}
+
+
+/* .vote-button.upvote-button {
+    background-image: url('../public/images/up.png');
+} */
+
+.num-answer-span {
+    margin-left: 30px;
+}
+
+.num-answer-span,
+.num-answer-label {
+    /* border: black solid 1px; */
+    font-size: 0.75rem;
+    display: inline;
+    text-align: center;
+    /* padding: 10px; */
+}
+
+.modified-span {
+    font-size: 0.75rem;
+    color: #555555;
+}
+
+.question-title-span {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+}
+
+.body-content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightslategray;
+    padding: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    width: inherit;
+}
+
+.body-header-content {
+    display: flex;
+    justify-content: center;
+    width: 1300px;
+    padding: 0px 5px;
+    height: 70px;
+    margin-right: 150px
+}
+
+.left-sidebar-header {
+    width: fit-content;
+    background-color: lightslategrey;
+}
+
+.right-sidebar-header {
+    width: fit-content;
+    background-color: lightslategrey;
+}
+
+.ask-button {
+    padding: 0.8em;
+    margin: 20px;
+    background-color: #0a95ff;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+    color: white;
+}
+
+#navbar-left {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+}
+
+.question-list-container {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin-right: 150px;
+}
+
+.question-container {
+    display: flex;
+    padding: 20px;
+}
+
+.vote-answer-div {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    align-items: flex-start;
+}
+
+.vote-div {
+    margin-left: 30px;
+}
+
+.vote-span {
+    font-size: 0.75rem;
+}
+
+.title-content-div {
+    flex-direction: column;
+}
+
+.hidden {
+    display: none;
+}
+
+hr {
+    border: 1px solid #555555;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
