@@ -1,0 +1,20 @@
+.searchbar-input:hover,
+.searchbar-input:focus {
+    background-color: rgb(100, 13, 13);
+}
+
+.dropDownContent::-webkit-scrollbar {
+    background-color: rgb(36, 33, 33);
+    border-radius: 2px;
+}
+
+.dropDownContent::-webkit-scrollbar-thumb {
+    background: black;
+    border: white 0.01px solid;
+    border-radius: 2px;
+}
+
+.searchbar-input-container {
+    display: flex;
+    flex-direction: column;
+}
