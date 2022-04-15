@@ -6,12 +6,12 @@ block content
   div.content-body
     .body-sidebar-left
     .content-center
-      .question-container
+      div(class=`question-container` id=`question-container-${question.id}`)
         .main-container
           .sidebar-container
-            button.vote-button.upvote-button
-            span.vote-count-span #{votes}
-            button.vote-button.downvote-button
+            div(class=`vote-button upvote-button question-upvote-button` id=`upvote-question-${question.id}`)
+            span.vote-count-span.vote-span.question-votes #{votes}
+            a(href="#"): div(class=`vote-button downvote-button question-downvote-button` id=`downvote-question-${question.id}`)
           .content-container
             p#content-text #{question.content}
         .button-container
@@ -26,9 +26,9 @@ block content
             div(id= `answer-${answer.id}` class="answer-container")
               .main-container
                 .sidebar-container
-                  button.vote-button.upvote-button
-                  span.vote-span= `${answerVotesCollection[`${answer.id}vote`]}`
-                  button.vote-button.downvote-button
+                  a(href="#"): div(class=`vote-button upvote-button` id=`upvote-answer-${answer.id}`)
+                  span(class=`vote-span answer-vote-span answer-${answerId}-vote-span`)= `${answerVotesCollection[`${answer.id}vote`]}`
+                  a(href="#"): div(class=`vote-button downvote-button` id=`downvote-answer-${answer.id}`)
                 .content-container
                   p(id=`${answer.id}-answer-text`) #{answer.content}
               .button-container

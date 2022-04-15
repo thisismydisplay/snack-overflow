@@ -33,7 +33,6 @@ router.get(
 
         //iterate through QuestionVotes to track number of votes for each question
         questionVotes.forEach((questionVote) => {
-
             //if voteCollection does not have key for question, create key with value 0;
             if (!voteCollection[`${questionVote.questionId}vote`]) {
                 voteCollection[`${questionVote.questionId}vote`] = 0;
@@ -45,12 +44,10 @@ router.get(
             } else {
                 voteCollection[`${questionVote.questionId}vote`] -= 1;
             }
-
         });
 
         //iterate through answers to track number of answers for each question
         answers.forEach((answer) => {
-
             //if answerCollection does not have key for question, create key with value 1
             if (!answerCollection[`${answer.questionId}numAnswers`]) {
                 answerCollection[`${answer.questionId}numAnswers`] = 1;
@@ -59,8 +56,7 @@ router.get(
             else {
                 answerCollection[`${answer.questionId}numAnswers`] += 1;
             }
-
-        })
+        });
         // res.send("ok")
         console.log("vote collection ", voteCollection);
         res.render("questions", {
@@ -151,6 +147,35 @@ router.get(
         if (req.session.auth) {
             loggedInUser = req.session.auth.userId;
         }
+
+        //////paste/
+        // const thisQuestionVotes = await db.QuestionVote.findAll({
+        //     where: {
+        //         questionId: req.params.id,
+        //     },
+        //     // include: [db.QuestionVote],
+        // });
+        // const {type} = req.body;
+        // let hasVote = false;
+        // let questionVoteId;
+        // thisQuestionVotes.forEach((vote) => {
+        //     if ((vote.userId === req.session.auth.userId)) {
+        //         console.log("inside questionvotes iterating over:")
+        //         console.log("----------req.session.auth.userId", req.session.auth.userId)
+        //         console.log("----------vote.userId",vote.userId)
+        //         hasVote = true;
+        //         questionVoteId = vote.id;
+        //         if (hasVote) {
+        //             if(vote.isUpvote){
+
+        //             } else {
+
+        //             }
+        //         }
+
+        //     }
+        // });
+
         // let isQuestionUser = false;
         // console.log(res.locals.user.id);
         // console.log(question.id);
@@ -373,5 +398,108 @@ router.post(
         }
     })
 );
+
+router.post(
+    "/:id(\\d+)/vote",
+    requireAuth,
+    restoreUser,
+    asyncHandler(async (req, res) => {
+        console.log("INSIDE THE ROUTER!!!");
+        const questionVotes = await db.QuestionVote.findAll({
+            where: {
+                questionId: req.params.id,
+            },
+            // include: [db.QuestionVote],
+        });
+        const { type } = req.body;
+        console.log(questionVotes);
+        let hasVote = false;
+        let hasUpvote = false;
+        let hasDownvote = false;
+        let questionVoteId;
+        questionVotes.forEach((vote) => {
+            if (vote.userId === req.session.auth.userId) {
+                console.log("inside questionvotes iterating over:");
+                console.log(
+                    "----------req.session.auth.userId",
+                    req.session.auth.userId
+                );
+                console.log("----------vote.userId", vote.userId);
+                hasVote = true;
+
+                questionVoteId = vote.id;
+
+                if (vote.isUpvote) {
+                    hasUpvote = true;
+                } else {
+                    hasDownvote = true;
+                }
+            }
+        });
+
+        // await answer.destroy();
+        // console.log('you have arrived at the delete route: ', req.params.id)
+        if (hasVote) {
+            if ((type === 'upvote' && hasUpvote) || (type === 'downvote' && hasDownvote)){
+
+                console.log("inside if");
+                const thisVote = await db.QuestionVote.findByPk(questionVoteId);
+                await thisVote.destroy();
+                res.json({ message: "Removed" });
+            } else {
+                res.json({ message: "Cannot upvote and downvote"})
+            }
+
+        } else {
+            console.log("inside else");
+            if (type === "upvote") {
+                await db.QuestionVote.create({
+                    userId: req.session.auth.userId,
+                    questionId: req.params.id,
+                    isUpvote: true,
+                });
+            } else {
+                await db.QuestionVote.create({
+                    userId: req.session.auth.userId,
+                    questionId: req.params.id,
+                    isUpvote: false,
+                });
+            }
+            res.json({ message: "Success" });
+        }
+    })
+);
+
+router.get("/:id(\\d+)/vote",
+requireAuth,
+restoreUser,
+asyncHandler(async (req, res) => {
+    const questionId = req.params.id;
+    const questionVotes = await db.QuestionVote.findAll({
+        where: {
+            questionId: req.params.id,
+        },
+        // include: [db.QuestionVote],
+    });
+    let type = 'none';
+    questionVotes.forEach((vote) => {
+        if (vote.userId === req.session.auth.userId) {
+            console.log("inside questionvotes iterating over:");
+            console.log(
+                "----------req.session.auth.userId",
+                req.session.auth.userId
+            );
+            console.log("----------vote.userId", vote.userId);
+            hasVote = true;
+
+            if (vote.isUpvote) {
+                type = "upvote"
+            } else {
+                type = "downvote"
+            }
+        }
+    });
+    res.json({type});
+}));
 
 module.exports = router;

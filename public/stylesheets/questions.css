@@ -13,9 +13,10 @@ body {
     cursor: pointer;
 }
 
-.vote-button.upvote-button {
+
+/* .vote-button.upvote-button {
     background-image: url('../public/images/up.png');
-}
+} */
 
 .num-answer-span {
     margin-left: 30px;
@@ -24,10 +25,9 @@ body {
 .num-answer-span,
 .num-answer-label {
     /* border: black solid 1px; */
-    font-size: .75rem;
+    font-size: 0.75rem;
     display: inline;
     text-align: center;
-
     /* padding: 10px; */
 }
 
@@ -115,16 +115,15 @@ body {
 }
 
 .vote-span {
-    font-size: .75rem;
+    font-size: 0.75rem;
 }
-
 
 .title-content-div {
     flex-direction: column;
 }
 
 .hidden {
-    display: none
+    display: none;
 }
 
 hr {
