@@ -20,7 +20,8 @@ a {
     margin: 0;
 }
 
-.login-create-account>p>a:hover {
+.login-create-account>p>a:hover,
+.cancel-button:hover {
     color: #ed7a1c;
 }
 
@@ -39,4 +40,9 @@ a {
 
 .login-cancel-button>button {
     margin-right: 0.5rem;
+}
+
+.login-button:hover {
+    background-color: #ed7a1c;
+    color: white;
 }
