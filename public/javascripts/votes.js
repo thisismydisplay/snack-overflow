@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (answerVotesEle.innerText === "1 Answers") {
         answerVotesEle.innerText = "1 Answer";
     }
-    // const thisQuestion = document.querySelector(".question-container");
-    // const qId = thisQuestion.id.split("-")[2];
+    const thisQuestion = document.querySelector(".question-container");
+    const qId = thisQuestion.id.split("-")[2];
 
-    // const res = await fetch(`/questions/${qId}/vote`);
-    // console.log(res)
-    // const data = await res.text();
-    // if (data !== "none") {
-    //     if (data === "upvote") {
-    //         const up = document.querySelector(".question-upvote-button");
-    //         up.style.borderBottom = "30px solid #f48224";
-    //     } else if (data === "downvote") {
-    //         const down = document.querySelector(".question-downvote-button");
-    //         down.style.borderTop = "30px solid #f48224";
-    //     }
-    // }
+    const res = await fetch(`/questions/${qId}/vote`);
+    console.log(res)
+    const {type} = await res.json();
+    if (type !== "none") {
+        if (type === "upvote") {
+            const up = document.querySelector(".question-upvote-button");
+            up.style.borderBottom = "30px solid #f48224";
+        } else if (type === "downvote") {
+            const down = document.querySelector(".question-downvote-button");
+            down.style.borderTop = "30px solid #f48224";
+        }
+    }
 
     const votes = document.querySelectorAll(".vote-button");
     votes.forEach((vote) => {

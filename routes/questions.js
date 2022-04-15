@@ -481,6 +481,7 @@ asyncHandler(async (req, res) => {
         },
         // include: [db.QuestionVote],
     });
+    let type = 'none';
     questionVotes.forEach((vote) => {
         if (vote.userId === req.session.auth.userId) {
             console.log("inside questionvotes iterating over:");
@@ -491,16 +492,14 @@ asyncHandler(async (req, res) => {
             console.log("----------vote.userId", vote.userId);
             hasVote = true;
 
-            // questionVoteId = vote.id;
-
             if (vote.isUpvote) {
-                res.send("upvote")
+                type = "upvote"
             } else {
-                res.send("downvote")
+                type = "downvote"
             }
         }
     });
-    res.send("none");
+    res.json({type});
 }));
 
 module.exports = router;
