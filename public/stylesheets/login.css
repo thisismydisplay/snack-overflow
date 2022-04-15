@@ -1,0 +1,42 @@
+a {
+    text-decoration: none;
+}
+
+.login-page-form {
+    padding: 2.5rem 2.5rem 0 2.5rem;
+    display: flex;
+    margin: 5rem 0 0 0;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-create-account {
+    /* margin-top: 0.5rem; */
+    margin: 0.5rem auto;
+}
+
+.login-create-account>p {
+    margin: 0;
+}
+
+.login-create-account>p>a:hover {
+    color: #ed7a1c;
+}
+
+.login-email,
+.login-password {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.login-cancel-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.login-cancel-button>button {
+    margin-right: 0.5rem;
+}
