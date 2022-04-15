@@ -2,9 +2,7 @@ body {
     width: max-content;
 }
 
-.body-content-container {
-
-}
+.body-content-container {}
 
 #nav-wrapper {
     width: auto;
@@ -71,14 +69,26 @@ body {
     height: 47px;
     width: 99vw;
     padding: 0px 5px;
-
 }
 
 .nav-btn {
-    margin-right: 100px;
+    /* margin-right: 100px; */
+    padding: 0.5rem;
+    /* border: 1px solid; */
+    margin: 0.5rem;
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: #ed7a1c;
+    color: white;
+    /* box-shadow: 10px 10px #ed7a1c; */
 }
 
 #navbar-right {
+    display: flex;
     width: auto;
     /* margin-left: 800px; */
 }
