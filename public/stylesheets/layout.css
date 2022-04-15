@@ -2,6 +2,10 @@ body {
     width: max-content;
 }
 
+.body-content-container {
+
+}
+
 #nav-wrapper {
     width: auto;
     border-top: 3px solid #ed7a1c;
@@ -61,7 +65,7 @@ body {
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: sticky;
     background-color: #fcfcfc;
     height: 47px;
@@ -76,7 +80,7 @@ body {
 
 #navbar-right {
     width: auto;
-    margin-left: 800px;
+    /* margin-left: 800px; */
 }
 
 #logo {
@@ -90,14 +94,15 @@ body {
 
 #navbar-center {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     border: 0.25px black solid;
     border-radius: 2.5px;
     padding: 2px;
     /* min-width: max-content; */
     width: auto;
-    margin-left: 200px;
+    max-width: 900px;
+    /* margin-left: 200px; */
 }
 
 #searchbar-input[type="search"] {

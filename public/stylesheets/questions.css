@@ -33,16 +33,22 @@ body {
 }
 
 .modified-span {
+    display: flex;
+    align-self: flex-end;
     font-size: 0.75rem;
-    color: #555555;
+    background-color: white;
+    color: lightslategray;
+    /* padding-right: 2rem; */
 }
 
 .question-title-span {
     font-size: 1.5rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 800px;
+    color: #0a95ff;
+    padding-left: 2rem;
 }
 
 .body-content-container {
@@ -99,6 +105,7 @@ body {
     flex-direction: column;
     background-color: white;
     /* margin-right: 150px; */
+    z-index: 2;
 }
 
 .question-container {
@@ -148,7 +155,9 @@ body {
 .img-div {
     display: flex;
     align-self: flex-end;
-    margin-right: 2rem;
+    background-color: white;
+    color: #0a95ff;
+    padding: 0 0.5rem
 }
 
 .title-div {
