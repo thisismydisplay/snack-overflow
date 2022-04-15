@@ -18,9 +18,10 @@ body {
     background-image: url('../public/images/up.png');
 } */
 
-.num-answer-span {
+
+/* .num-answer-span {
     margin-left: 30px;
-}
+} */
 
 .num-answer-span,
 .num-answer-label {
@@ -49,20 +50,20 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: lightslategray;
-    padding: 20px;
+    /* background-color: lightslategray; */
+    /* padding: 20px; */
     padding-top: 0px;
     padding-bottom: 0px;
-    width: inherit;
+    width: 0 auto;
 }
 
 .body-header-content {
     display: flex;
     justify-content: center;
-    width: 1300px;
+    width: 935px;
     padding: 0px 5px;
-    height: 70px;
-    margin-right: 150px
+    /* height: 70px; */
+    /* margin-right: 150px; */
 }
 
 .left-sidebar-header {
@@ -76,13 +77,15 @@ body {
 }
 
 .ask-button {
+    width: 6rem;
     padding: 0.8em;
     margin: 20px;
     background-color: #0a95ff;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     color: white;
+    text-decoration: none;
 }
 
 #navbar-left {
@@ -95,23 +98,33 @@ body {
     display: flex;
     flex-direction: column;
     background-color: white;
-    margin-right: 150px;
+    /* margin-right: 150px; */
 }
 
 .question-container {
     display: flex;
-    padding: 20px;
+    padding: 0 35px;
+    margin-bottom: 10px;
 }
 
 .vote-answer-div {
+    margin: 0;
     display: flex;
     flex-direction: column;
-    width: 100px;
+    width: auto;
     align-items: flex-start;
+    align-content: stretch;
+    /* margin-bottom: 1.5rem; */
 }
 
-.vote-div {
-    margin-left: 30px;
+.answer-div {
+    justify-content: flex-start;
+}
+
+.vote-div,
+.answer-div {
+    display: inline-block;
+    /* margin-left: 30px; */
 }
 
 .vote-span {
@@ -124,6 +137,22 @@ body {
 
 .hidden {
     display: none;
+}
+
+.username-content-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-span,
+.img-div {
+    display: flex;
+    align-self: flex-end;
+    margin-right: 2rem;
+}
+
+.title-div {
+    margin-bottom: 2rem;
 }
 
 hr {
