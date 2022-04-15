@@ -24,7 +24,7 @@ block content
         div.answer-list-container
           each answer in answers
             div(id= `answer-${answer.id}` class="answer-container")
-              .main-container
+              .main-container.answer-main-container
                 div(class=`sidebar-container answer-sidebar-container` id=`answer-vote-container-${answer.id}`)
                   a(href="#"): div(class=`vote-button upvote-button answer-upvote-button` id=`upvote-answer-${answer.id}`)
                   span(class=`vote-span answer-vote-span answer-${answer.id}-vote-span`)= `${answerVotesCollection[`${answer.id}vote`]}`
@@ -33,19 +33,21 @@ block content
                   p(id=`${answer.id}-answer-text`) #{answer.content}
               .button-container
                 if loggedInUser === answer.userId
-                  button(class=`edit-answer-btn modify-answer-btns-${answer.id}` id=`edit-answer-btn-${answer.id}`) Edit
-                  button(class=`delete-answer-btn modify-answer-btns-${answer.id}` id=`delete-answer-btn-${answer.id}`) Delete
+                  button(class=`edit-button edit-answer-btn modify-answer-btns-${answer.id}` id=`edit-answer-btn-${answer.id}`) Edit
+                  button(class=`delete-button delete-answer-btn modify-answer-btns-${answer.id}` id=`delete-answer-btn-${answer.id}`) Delete
                   div(class=`hidden confirm-modal confirm-modal-${answer.id}` id=`confirm-delete-modal-${answer.id}`)
                     .modal-content
-                      span.modal-confirm Yes, delete my answer
-                      span.modal-cancel No, cancel
+                      span.modal-text Are you sure?
+                      .modal-buttons
+                        span.modal-cancel Cancel
+                        span.modal-confirm Delete
 
-                  form(class='hidden' id=`edit-answer-form-${answer.id}`)
-                    label Content:
-                    textarea(type="text" name="content" id=`${answer.id}-edit-answer`) #{answer.content}
+                  form(class='hidden edit-answer-form' id=`edit-answer-form-${answer.id}`)
+                    label
+                    textarea(class= 'edit-answer-text' onclick='this.style.height = "";this.style.height = this.scrollHeight + "px"' type="text" name="content" rows=10 id=`${answer.id}-edit-answer`) #{answer.content}
                     button(class="edit-answer-submit" id=`edit-answer-submit-${answer.id}`) Submit Edit
       .answer-form-container
-        .btn-container#post-answer-btn
+        .btn-container#post-answer-btn.post-answer-btn
           a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
     .body-sidebar-right
 
