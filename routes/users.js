@@ -166,6 +166,17 @@ router.post(
     })
 );
 
+router.post(
+    "/login/demo",
+    asyncHandler(async (req, res) => {
+        const user = { id: 1 }
+        loginUser(req, res, user);
+        return res.redirect("/");
+    })
+);
+
+
+
 router.post("/logout", (req, res) => {
     logoutUser(req, res);
     res.redirect("/");
