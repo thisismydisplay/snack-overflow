@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         vote.addEventListener("click", async (e) => {
             // question upvote database manipulation
             if (vote.classList.contains("question-upvote-button")) {
+                e.preventDefault();
                 const questionId = e.target.id.split("-")[2];
                 const res = await fetch(`/questions/${questionId}/vote`, {
                     method: "POST",
@@ -91,6 +92,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
             if (vote.classList.contains("question-downvote-button")) {
+                e.preventDefault();
+
                 // question downvote database manipulation
                 const questionId = e.target.id.split("-")[2];
                 const res = await fetch(`/questions/${questionId}/vote`, {
@@ -122,6 +125,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
             if (vote.classList.contains("answer-upvote-button")) {
+                e.preventDefault();
+
                 // answer upvote database manipulation
                 const answerId = e.target.id.split("-")[2];
                 const res = await fetch(`/answers/${answerId}/vote`, {
@@ -157,6 +162,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             }
             if (vote.classList.contains("answer-downvote-button")) {
+                e.preventDefault();
+
                 // answer downvote database manipulation
                 const answerId = e.target.id.split("-")[2];
                 const res = await fetch(`/answers/${answerId}/vote`, {
