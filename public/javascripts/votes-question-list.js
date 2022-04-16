@@ -1,5 +1,6 @@
 const voteSpans = document.querySelectorAll(".vote-span");
 const numAnswerSpans = document.querySelectorAll(".num-answer-span");
+const updatedSpans = document.querySelectorAll(".updated-span");
 document.addEventListener("DOMContentLoaded", async () => {
 
     numAnswerSpans.forEach((numAnswerSpan) => {
@@ -21,4 +22,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             voteSpan.innerText = "0";
         }
     });
+    // updatedSpans.forEach((updatedSpan) => {
+    //     // set undefined vote counts to 0
+    //     if (updatedSpan.innerText === "undefined") {
+    //         updatedSpan.innerText = "never";
+    //     }
+    // });
 })
