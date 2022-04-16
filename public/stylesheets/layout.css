@@ -128,7 +128,8 @@ body {
 
 .searchbar-input-container {
     display: flex;
-    justify-content: flex=start;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
     width: auto;
 }
