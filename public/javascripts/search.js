@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", (event) => {
     const input = document.getElementById("searchbar-input");
     const matchedContainer = document.querySelector('.sDropDown')
-    matchedContainer.classList.add('hidden');
+    // matchedContainer.classList.add('hidden');
     input.addEventListener('input', async (event) => {
         const aTagMatches = document.querySelectorAll('.Sresults-drop-down');
         const search = event.target.value;

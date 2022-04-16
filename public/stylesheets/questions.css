@@ -32,7 +32,7 @@ body {
     /* padding: 10px; */
 }
 
-.modified-span {
+.modified-span, .updated-span {
     display: flex;
     align-self: flex-end;
     font-size: 0.75rem;
