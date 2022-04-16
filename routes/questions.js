@@ -16,6 +16,42 @@ const router = express.Router();
 //   }
 // };
 
+function dateAdjustLogic(resource) {
+    let createdAt = resource.createdAt.toString();
+    let cIndex = createdAt.indexOf("GMT");
+    let updatedAt = resource.updatedAt.toString();
+    let uIndex = updatedAt.indexOf("GMT");
+    createdAt = createdAt.slice(0, cIndex - 1);
+    updatedAt = updatedAt.slice(0, uIndex - 1);
+    resource.createdAtShort = createdAt;
+    resource.updatedAtShort = updatedAt;
+    let now = new Date();
+
+    let updatedDate = new Date(resource.updatedAt);
+    console.log(updatedAt);
+    console.log(now);
+    let daysAgo = now.getDay() - updatedDate.getDay();
+    let hoursAgo = now.getHours() - updatedDate.getHours();
+    let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
+    let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
+
+    if (daysAgo) resource.timeAgo = `${daysAgo} days ago`;
+    else if (hoursAgo) resource.timeAgo = `${hoursAgo} hours ago`;
+    else if (minutesAgo) resource.timeAgo = `${minutesAgo} minutes ago`;
+    else if (secondsAgo) resource.timeAgo = `${secondsAgo} seconds ago`;
+    else resource.timeAgo = "0 seconds ago";
+}
+function dateAdjust(resourcesObject) {
+    //TO DO: DRY
+    if (resourcesObject.length) {
+        resourcesObject.forEach((resource) => {
+            dateAdjustLogic(resource);
+        });
+    } else {
+        dateAdjustLogic(resourcesObject);
+    }
+}
+
 router.get(
     "/",
     asyncHandler(async (req, res) => {
@@ -59,40 +95,34 @@ router.get(
         });
         // res.send("ok")
 
-        questions.forEach(question=>{
-            let createdAt = question.createdAt.toString();
-            let cIndex = createdAt.indexOf('GMT');
-            let updatedAt = question.updatedAt.toString();
-            let uIndex = updatedAt.indexOf('GMT')
-            createdAt = createdAt.slice(0, cIndex-1)
-            updatedAt = updatedAt.slice(0, uIndex-1)
-            question.createdAtShort = createdAt;
-            question.updatedAtShort = updatedAt;
-            let now = new Date();
+        dateAdjust(questions);
 
-            // let offset = new Date().getTimezoneOffset();
-            // console.log(offset);
-            // To make created at reflect user timezone
+        // questions.forEach(question=>{
+        //     let createdAt = question.createdAt.toString();
+        //     let cIndex = createdAt.indexOf('GMT');
+        //     let updatedAt = question.updatedAt.toString();
+        //     let uIndex = updatedAt.indexOf('GMT')
+        //     createdAt = createdAt.slice(0, cIndex-1)
+        //     updatedAt = updatedAt.slice(0, uIndex-1)
+        //     question.createdAtShort = createdAt;
+        //     question.updatedAtShort = updatedAt;
+        //     let now = new Date();
 
+        //     let updatedDate = new Date(question.updatedAt)
+        //     console.log(updatedAt)
+        //     console.log(now)
+        //     let daysAgo = now.getDay() - updatedDate.getDay();
+        //     let hoursAgo = now.getHours() - updatedDate.getHours()
+        //     let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
+        //     let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
 
+        //     if (daysAgo) question.timeAgo = `${daysAgo} days ago`;
+        //     else if (hoursAgo) question.timeAgo = `${hoursAgo} hours ago`;
+        //     else if (minutesAgo) question.timeAgo = `${minutesAgo} minutes ago`;
+        //     else if (secondsAgo) question.timeAgo = `${secondsAgo} seconds ago`;
+        //     else question.timeAgo = '0 seconds ago'
 
-
-
-            let updatedDate = new Date(question.updatedAt)
-            console.log(updatedAt)
-            console.log(now)
-            let daysAgo = now.getDay() - updatedDate.getDay();
-            let hoursAgo = now.getHours() - updatedDate.getHours()
-            let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
-            let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
-
-            if (daysAgo) question.timeAgo = `${daysAgo} days ago`;
-            else if (hoursAgo) question.timeAgo = `${hoursAgo} hours ago`;
-            else if (minutesAgo) question.timeAgo = `${minutesAgo} minutes ago`;
-            else if (secondsAgo) question.timeAgo = `${secondsAgo} seconds ago`;
-            else question.timeAgo = '0 seconds ago'
-
-        })
+        // })
 
         console.log("vote collection ", voteCollection);
         res.render("questions", {
@@ -147,6 +177,7 @@ router.get(
                 questionId: question.id,
             },
             order: [["createdAt", "ASC"]],
+            include: [db.User, db.AnswerVote],
         });
         if (!answers) answers.length = 0;
 
@@ -217,6 +248,9 @@ router.get(
         // console.log(question.id);
         // if (res.locals.user.id == question.id) isQuestionUser = true;
         // console.log(isQuestionUser);
+
+        dateAdjust(answers);
+        dateAdjust(question);
         res.render("question-details", {
             question,
             // isQuestionUser,
@@ -425,7 +459,7 @@ router.post(
             res.redirect(`/questions/${questionId}`);
         } else {
             const errors = validatorErrors.array().map((error) => error.msg);
-            const question = {id: questionId}
+            const question = { id: questionId };
             res.render("answer-add", {
                 formTitle: "Add Answer",
                 content: answer.content,
@@ -479,16 +513,17 @@ router.post(
         // await answer.destroy();
         // console.log('you have arrived at the delete route: ', req.params.id)
         if (hasVote) {
-            if ((type === 'upvote' && hasUpvote) || (type === 'downvote' && hasDownvote)){
-
+            if (
+                (type === "upvote" && hasUpvote) ||
+                (type === "downvote" && hasDownvote)
+            ) {
                 console.log("inside if");
                 const thisVote = await db.QuestionVote.findByPk(questionVoteId);
                 await thisVote.destroy();
                 res.json({ message: "Removed" });
             } else {
-                res.json({ message: "Cannot upvote and downvote"})
+                res.json({ message: "Cannot upvote and downvote" });
             }
-
         } else {
             console.log("inside else");
             if (type === "upvote") {
@@ -509,36 +544,38 @@ router.post(
     })
 );
 
-router.get("/:id(\\d+)/vote",
-requireAuth,
-restoreUser,
-asyncHandler(async (req, res) => {
-    const questionId = req.params.id;
-    const questionVotes = await db.QuestionVote.findAll({
-        where: {
-            questionId: req.params.id,
-        },
-        // include: [db.QuestionVote],
-    });
-    let qType = 'none';
-    questionVotes.forEach((vote) => {
-        if (vote.userId === req.session.auth.userId) {
-            console.log("inside questionvotes iterating over:");
-            console.log(
-                "----------req.session.auth.userId",
-                req.session.auth.userId
-            );
-            console.log("----------vote.userId", vote.userId);
-            hasVote = true;
+router.get(
+    "/:id(\\d+)/vote",
+    requireAuth,
+    restoreUser,
+    asyncHandler(async (req, res) => {
+        const questionId = req.params.id;
+        const questionVotes = await db.QuestionVote.findAll({
+            where: {
+                questionId: req.params.id,
+            },
+            // include: [db.QuestionVote],
+        });
+        let qType = "none";
+        questionVotes.forEach((vote) => {
+            if (vote.userId === req.session.auth.userId) {
+                console.log("inside questionvotes iterating over:");
+                console.log(
+                    "----------req.session.auth.userId",
+                    req.session.auth.userId
+                );
+                console.log("----------vote.userId", vote.userId);
+                hasVote = true;
 
-            if (vote.isUpvote) {
-                qType = "upvote"
-            } else {
-                qType = "downvote"
+                if (vote.isUpvote) {
+                    qType = "upvote";
+                } else {
+                    qType = "downvote";
+                }
             }
-        }
-    });
-    res.json({qType});
-}));
+        });
+        res.json({ qType });
+    })
+);
 
 module.exports = router;

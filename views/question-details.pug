@@ -14,6 +14,12 @@ block content
             a(href="#"): div(class=`vote-button downvote-button question-downvote-button` id=`downvote-question-${question.id}`)
           .content-container
             p#content-text #{question.content}
+            .username-content-div
+              .img-div
+              span.username-span= `${question.User.username}`
+              .modified-div
+              span.modified-span= `Created at ${question.createdAtShort}`
+              span.updated-span= `Updated at ${question.timeAgo}`
         .button-container
           if loggedInUser === question.userId
             a(href=`/questions/${question.id}/edit`): button.edit-button Edit
@@ -31,6 +37,12 @@ block content
                   a(href="#"): div(class=`vote-button downvote-button answer-downvote-button` id=`downvote-answer-${answer.id}`)
                 .content-container
                   p(id=`${answer.id}-answer-text`) #{answer.content}
+                  .username-content-div
+                    .img-div
+                    span.username-span= `${answer.User.username}`
+                    .modified-div
+                    span.modified-span= `Created at ${answer.createdAtShort}`
+                    span.updated-span= `Updated at ${answer.timeAgo}`
               .button-container
                 if loggedInUser === answer.userId
                   button(class=`edit-button edit-answer-btn modify-answer-btns-${answer.id}` id=`edit-answer-btn-${answer.id}`) Edit
