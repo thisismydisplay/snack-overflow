@@ -62,7 +62,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
+    /* position: sticky; */
     background-color: #fcfcfc;
     height: 47px;
     width: 99vw;

@@ -39,14 +39,15 @@
 } */
 
 .sDropDown {
+    position: absolute;
     width: 300px;
     height: 200px;
     border: .25px solid black;
-    position: absolute;
     top: 36px;
-    left: 407px;
+    left: 861px;
     background-color: white;
     border-radius: 5px;
+    /* z-index: 1; */
 }
 
 .dropDownContent {
@@ -56,6 +57,7 @@
     overflow-y: scroll;
     height: 200px;
     border-radius: 5px;
+    /* z-index: 4; */
 }
 
 .dropDownContent>a {
