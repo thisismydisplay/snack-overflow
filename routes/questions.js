@@ -58,6 +58,42 @@ router.get(
             }
         });
         // res.send("ok")
+
+        questions.forEach(question=>{
+            let createdAt = question.createdAt.toString();
+            let cIndex = createdAt.indexOf('GMT');
+            let updatedAt = question.updatedAt.toString();
+            let uIndex = updatedAt.indexOf('GMT')
+            createdAt = createdAt.slice(0, cIndex-1)
+            updatedAt = updatedAt.slice(0, uIndex-1)
+            question.createdAtShort = createdAt;
+            question.updatedAtShort = updatedAt;
+            let now = new Date();
+
+            // let offset = new Date().getTimezoneOffset();
+            // console.log(offset);
+            // To make created at reflect user timezone
+
+
+
+
+
+            let updatedDate = new Date(question.updatedAt)
+            console.log(updatedAt)
+            console.log(now)
+            let daysAgo = now.getDay() - updatedDate.getDay();
+            let hoursAgo = now.getHours() - updatedDate.getHours()
+            let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
+            let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
+
+            if (daysAgo) question.timeAgo = `${daysAgo} days ago`;
+            else if (hoursAgo) question.timeAgo = `${hoursAgo} hours ago`;
+            else if (minutesAgo) question.timeAgo = `${minutesAgo} minutes ago`;
+            else if (secondsAgo) question.timeAgo = `${secondsAgo} seconds ago`;
+            else question.timeAgo = '0 seconds ago'
+
+        })
+
         console.log("vote collection ", voteCollection);
         res.render("questions", {
             title: "Top Questions",
