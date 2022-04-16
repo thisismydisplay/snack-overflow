@@ -53,7 +53,7 @@ block content
           if loggedInUser
             a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
           else
-            a(href='/users/register' id='logged-out-post-answer'): button.post-answer-button Post Your Answer
+            a(href='/users/login' id='logged-out-post-answer'): button.post-answer-button Post Your Answer
 
     .body-sidebar-right
 
