@@ -1,4 +1,46 @@
-.registration-form {
+
+.register-page-form {
+    padding: 2.5rem 2.5rem 0 2.5rem;
+    display: flex;
+    margin: 5rem 0 0 0;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-username,
+.register-email,
+.register-password,
+.register-confirm-password {
     display: flex;
     flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+
+.register-cancel-button{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.register-cancel-button>button {
+    margin-right: 0.5rem;
+}
+
+.register-button:hover {
+    background-color: #ed7a1c;
+    color: white;
+}
+
+.login-create-account>p>a:hover,
+.cancel-button:hover {
+    color: #ed7a1c;
+}
+
+#register-username:hover,
+#register-email:hover,
+#register-password:hover,
+#register-confirm-password:hover {
+    box-shadow: 0px 0px 15px #ed7a1c;
 }
