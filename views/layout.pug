@@ -39,7 +39,10 @@ html
             .title-container
               span#header-title #{title}
             .btn-container
+            if locals.authenticated
               a(href='/questions/add' method='GET'): button.ask-button Ask Question
+            else
+              a(href='/users/login' method='GET' id='logged-out-ask-btn'): button.ask-button Ask Question
           .right-sidebar-header
         block content
 script(src="/javascripts/search.js" type='module')

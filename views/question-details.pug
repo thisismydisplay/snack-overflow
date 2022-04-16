@@ -50,7 +50,11 @@ block content
                       button(class="edit-answer-submit" id=`edit-answer-submit-${answer.id}`) Submit
       .answer-form-container
         .btn-container#post-answer-btn.post-answer-btn
-          a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
+          if loggedInUser
+            a(href=`/questions/${question.id}/answer/add` method='GET'): button.post-answer-button Post Your Answer
+          else
+            a(href='/users/register' id='logged-out-post-answer'): button.post-answer-button Post Your Answer
+
     .body-sidebar-right
 
     script(src="/javascripts/votes.js")
