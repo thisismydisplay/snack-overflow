@@ -6,12 +6,25 @@ block content
     +validationErrorSummary(errors)
     form(action='/users/register' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Username', 'username', user.username)
-        +field('Email Address', 'email', user.email)
-        +field('Password', 'password', user.password, 'password')
-        +field('Confirm Password', 'confirmPassword', '', 'password')
-        div(class='py-4')
-            button(type='submit') Register
-            a(href='/') Cancel
-    div
+        div.register-page-form
+            div.register-username
+                //- +field('Username', 'username', user.username)
+                label(for="username") Username:
+                input(type="text" name="username" id="register-username" value=user.username)
+            div.register-email
+                //- +field('Email Address', 'email', user.email)
+                label(for="email") Email:
+                input(type="email" name="email" id="register-email" value=user.email)
+            div.register-password
+                //- +field('Password', 'password', user.password, 'password')
+                label(for="password") Password:
+                input(type="password" name="password" id="register-password")
+            div.register-confirm-password
+                //- +field('Confirm Password', 'confirmPassword', '', 'password')
+                label(for="confirmPassword") Confirm Password:
+                input(type="password" name="confirmPassword" id="register-confirm-password")
+            div(class='register-cancel-button')
+                button(type='submit' class="register-button") Register
+                a(href='/' class="cancel-button") Cancel
+    div.login-create-account
         p: a(href='/users/login') Already have an account?
