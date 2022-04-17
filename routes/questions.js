@@ -27,6 +27,12 @@ function dateAdjustLogic(resource) {
     resource.updatedAtShort = updatedAt;
     let now = new Date();
 
+
+
+
+
+
+
     let updatedDate = new Date(resource.updatedAt);
     console.log(updatedAt);
     console.log(now);
@@ -39,14 +45,19 @@ function dateAdjustLogic(resource) {
     else if (hoursAgo) resource.timeAgo = `${hoursAgo} hours ago`;
     else if (minutesAgo) resource.timeAgo = `${minutesAgo} minutes ago`;
     else if (secondsAgo) resource.timeAgo = `${secondsAgo} seconds ago`;
+    else if (!daysAgo && !hoursAgo && !minutesAgo && !secondsAgo) resource.timeAgo = "just now";
     else resource.timeAgo = "0 seconds ago";
 }
 function dateAdjust(resourcesObject) {
     //TO DO: DRY
+    // console.log('THIS IS A RESOURCE OBJECT', resourcesObject);
     if (resourcesObject.length) {
         resourcesObject.forEach((resource) => {
             dateAdjustLogic(resource);
         });
+        // You have to explicitly state what to do if the resObj is 0 otherwise it'll throw a TypeError.
+    } else if (resourcesObject.length === 0) {
+        return resourcesObject;
     } else {
         dateAdjustLogic(resourcesObject);
     }
@@ -311,7 +322,7 @@ router.post(
 router.get("/add", csrfProtection, (req, res) => {
     res.render("question-add", {
         formTitle: "Add Question",
-        title: "Ask a public question",
+        title: "test",
         content: "test",
         csrfToken: req.csrfToken(),
     });
