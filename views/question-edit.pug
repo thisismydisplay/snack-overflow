@@ -6,10 +6,13 @@ block content
     +validationErrorSummary(errors)
     form(action=`/questions/${question.id}/edit` method="POST")
         input(type='hidden' name='_csrf' value=csrfToken)
-        label(for='title') Title:
-        input(type='text' name='title' value=question.title)
-        label(for='content') Content:
-        textarea(name='content') #{question.content}
-        div.form-buttons
-            button(type='submit' class='form-submit-button') Edit Question
-            a(href=`/questions/${question.id}` class='form-cancel-button') Cancel
+        .question-edit-form-container
+            .title-container
+                label(for='title' id="title-label") Title:
+                input(type='text' name='title' id="title-input" value=question.title)
+            .edit-answer-content-container
+                label(for='content' id="content-label") Content:
+                textarea(name='content' id="content-input") #{question.content}
+            div.form-buttons
+                button(type='submit' class='form-submit-button') Edit Question
+                a(href=`/questions/${question.id}` class='form-cancel-button') Cancel

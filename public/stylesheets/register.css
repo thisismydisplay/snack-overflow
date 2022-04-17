@@ -41,5 +41,5 @@
 #register-email:hover,
 #register-password:hover,
 #register-confirm-password:hover {
-    box-shadow: 1px 1px 15px grey;
+    box-shadow: 1px 1px 15px #ed7a1c;
 }

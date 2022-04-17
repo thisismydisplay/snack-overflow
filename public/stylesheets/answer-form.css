@@ -1,0 +1,16 @@
+.answer-form-container {
+    padding: 2.5rem 2.5rem 0 2.5rem;
+    display: flex;
+    width: 1000px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.answer-content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    text-decoration: none;
+}
