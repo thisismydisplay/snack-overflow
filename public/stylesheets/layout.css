@@ -88,9 +88,11 @@ body {
 
 #navbar-right {
     display: flex;
-    width: auto;
+    justify-content: flex-end;
+    width: 266px;
     /* margin-left: 800px; */
 }
+
 
 #logo {
     height: 30px;
