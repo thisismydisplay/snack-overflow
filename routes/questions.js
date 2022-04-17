@@ -311,7 +311,7 @@ router.post(
 router.get("/add", csrfProtection, (req, res) => {
     res.render("question-add", {
         formTitle: "Add Question",
-        title: "test",
+        title: "Ask a public question",
         content: "test",
         csrfToken: req.csrfToken(),
     });
