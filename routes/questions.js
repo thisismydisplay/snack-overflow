@@ -322,8 +322,8 @@ router.post(
 router.get("/add", csrfProtection, (req, res) => {
     res.render("question-add", {
         formTitle: "Add Question",
-        title: "test",
-        content: "test",
+        title: "Ask a public question",
+        content: "",
         csrfToken: req.csrfToken(),
     });
 });
@@ -435,6 +435,7 @@ router.get(
         const question = await db.Question.findByPk(questionId);
         res.render("answer-add", {
             formTitle: "Add Answer",
+            title: "Add your answer",
             question,
             csrfToken: req.csrfToken(),
         });
