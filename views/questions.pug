@@ -20,8 +20,8 @@ block content
             .img-div
             span.username-span= `${question.User.username}`
             .modified-div
-            span.modified-span= `Created ${question.createdAtShort}`
             span.updated-span= `Updated ${question.timeAgo}`
-          
+            span.modified-span= `Created ${question.createdAtShort}`
+
   include includes/footer.pug
   script(src="/javascripts/votes-question-list.js")
