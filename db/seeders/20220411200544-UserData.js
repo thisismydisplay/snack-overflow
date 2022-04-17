@@ -140,7 +140,7 @@ module.exports = {
                 username: "Brian",
                 hashedPassword:
                     "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
-                email: "briana@briana.com",
+                email: "brian@brian.com",
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
@@ -385,10 +385,50 @@ module.exports = {
                 updatedAt: new Date(),
             },
             {
-                username: "Zeb",
+                username: "Briana",
                 hashedPassword:
                     "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
-                email: "zeb@zeb.com",
+                email: "briana@briana.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                username: "Raymond",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "raymond@raymond.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                username: "Alec",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "alec@alec.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                username: "Rawaha",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "rawaha@rawaha.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                username: "Daniel",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "daniel@daniel.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                username: "Ryan",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "ryan@ryan.com",
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },

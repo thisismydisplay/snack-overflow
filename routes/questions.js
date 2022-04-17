@@ -35,13 +35,15 @@ function dateAdjustLogic(resource) {
         return `${type} ${string}${type > 1 ? "s" : ""} ago`
     }
     let diffTime = now.getTime() - updatedDate.getTime();
-    const days = Math.floor((diffTime/(1000*60*60*24)))
+
+    const days = Math.floor((diffTime / (1000 * 60 * 60 * 24)))
     if (days) return adjustString(days, "day")
-    const hrs = Math.floor((diffTime/(1000*60*60)))
+    const hrs = Math.floor((diffTime / (1000 * 60 * 60)))
     if (hrs) return adjustString(hrs, "hr")
-    const minutes = Math.floor((diffTime/(1000*60)))
+    const minutes = Math.floor((diffTime / (1000 * 60)))
     if (minutes) return adjustString(minutes, "minute")
-    const seconds = Math.floor((diffTime/(1000)))
+    const seconds = Math.floor((diffTime / (1000)))
+
     if (seconds) return adjustString(seconds, "second")
     return "just now"
 
