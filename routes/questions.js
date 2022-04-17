@@ -29,13 +29,12 @@ function dateAdjustLogic(resource) {
 
 
 
-    console.log('HELLLOOOOOOOOOOOOOOO11111');
+
 
 
 
     let updatedDate = new Date(resource.updatedAt);
     console.log(updatedAt);
-    console.log('HELLLOOOOOOOOOOOOOOO2222');
     console.log(now);
     let daysAgo = now.getDay() - updatedDate.getDay();
     let hoursAgo = now.getHours() - updatedDate.getHours();
