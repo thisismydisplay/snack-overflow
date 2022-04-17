@@ -27,39 +27,62 @@ function dateAdjustLogic(resource) {
     resource.updatedAtShort = updatedAt;
     let now = new Date();
 
-
-
-
-
-
-
     let updatedDate = new Date(resource.updatedAt);
     console.log(updatedAt);
     console.log(now);
-    let daysAgo = now.getDay() - updatedDate.getDay();
-    let hoursAgo = now.getHours() - updatedDate.getHours();
-    let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
-    let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
 
-    if (daysAgo) resource.timeAgo = `${daysAgo} days ago`;
-    else if (hoursAgo) resource.timeAgo = `${hoursAgo} hours ago`;
-    else if (minutesAgo) resource.timeAgo = `${minutesAgo} minutes ago`;
-    else if (secondsAgo) resource.timeAgo = `${secondsAgo} seconds ago`;
-    else if (!daysAgo && !hoursAgo && !minutesAgo && !secondsAgo) resource.timeAgo = "just now";
-    else resource.timeAgo = "0 seconds ago";
+    const adjustString = (type, string) => {
+        return `${type} ${string}${type > 1 ? "s" : ""} ago`
+    }
+    let diffTime = now.getTime() - updatedDate.getTime();
+    const days = Math.floor((diffTime/(1000*60*60*24)))
+    if (days) return adjustString(days, "day")
+    const hrs = Math.floor((diffTime/(1000*60*60)))
+    if (hrs) return adjustString(hrs, "hr")
+    const minutes = Math.floor((diffTime/(1000*60)))
+    if (minutes) return adjustString(minutes, "minute")
+    const seconds = Math.floor((diffTime/(1000)))
+    if (seconds) return adjustString(seconds, "second")
+    return "just now"
+
+
+    // return months >= 1
+    //     ? adjustString(months, "month")
+    //     : days >= 1
+    //     ? adjustString(days, "day")
+    //     : hrs >= 1
+    //     ? adjustString(hrs, "hr")
+    //     : minutes >= 1
+    //     ? adjustString(minutes, "minute")
+    //     : seconds >= 1
+    //     ? adjustString(seconds, "second")
+    //     : "just now"
+
+    // let daysAgo = now.getDay() - updatedDate.getDay();
+    // let hoursAgo = now.getHours() - updatedDate.getHours();
+    // let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
+    // let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
+
+    // if (daysAgo) resource.timeAgo = `${daysAgo} days ago`;
+    // else if (hoursAgo) resource.timeAgo = `${hoursAgo} hours ago`;
+    // else if (minutesAgo) resource.timeAgo = `${minutesAgo} minutes ago`;
+    // else if (secondsAgo) resource.timeAgo = `${secondsAgo} seconds ago`;
+    // else if (!daysAgo && !hoursAgo && !minutesAgo && !secondsAgo)
+    //     resource.timeAgo = "just now";
+    // else resource.timeAgo = "0 seconds ago";
 }
 function dateAdjust(resourcesObject) {
     //TO DO: DRY
     // console.log('THIS IS A RESOURCE OBJECT', resourcesObject);
     if (resourcesObject.length) {
         resourcesObject.forEach((resource) => {
-            dateAdjustLogic(resource);
+            resource.timeAgo = dateAdjustLogic(resource);
         });
         // You have to explicitly state what to do if the resObj is 0 otherwise it'll throw a TypeError.
     } else if (resourcesObject.length === 0) {
         return resourcesObject;
     } else {
-        dateAdjustLogic(resourcesObject);
+        resourcesObject.timeAgo = dateAdjustLogic(resourcesObject);
     }
 }
 
