@@ -424,6 +424,14 @@ module.exports = {
                 createdAt: new Date(),
                 updatedAt: new Date(),
             },
+            {
+                username: "Ryan",
+                hashedPassword:
+                    "$2a$10$X0XHMhJtLCWDL9e0eYa2YOuPAz5YrEaeLcd3rdbubtU6MopUWBGa2",
+                email: "ryan@ryan.com",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
             ...results,
         ]);
     },
