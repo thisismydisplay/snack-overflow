@@ -43,6 +43,7 @@ margin-right: 65px;
 .main-container {
     display: flex;
     justify-content: flex-start;
+
 }
 
 .question-container {
@@ -79,6 +80,7 @@ margin-right: 65px;
 }
 
 .content-center {
+    width: 925px;
     background-color: white;
     border-left: 1px solid lightgrey;
     border-right: 1px solid lightgrey;
@@ -89,6 +91,7 @@ margin-right: 65px;
     border-bottom: 1px solid lightgrey;
     margin-top: 20px;
     padding: 0px 20px;
+    /* width: 100% */
 }
 
 .body-sidebar-left,

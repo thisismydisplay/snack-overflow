@@ -83,6 +83,8 @@ body {
 }
 
 .ask-button {
+    display: flex;
+    align-items: center;
     width: 6rem;
     padding: 0.8em;
     margin: 20px;
@@ -104,6 +106,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: white;
+    width: 48.5%;
     /* margin-right: 150px; */
     /* z-index: 2; */
 }

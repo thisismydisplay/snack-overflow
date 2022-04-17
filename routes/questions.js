@@ -340,6 +340,7 @@ router.get(
         checkPermissions(question, res.locals.user);
 
         res.render("question-edit", {
+            title: "Edit your question",
             question,
             questionId,
             csrfToken: req.csrfToken(),
