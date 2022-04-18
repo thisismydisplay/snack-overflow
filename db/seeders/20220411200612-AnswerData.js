@@ -26,15 +26,15 @@ module.exports = {
                     updatedAt: new Date(),
                 },
                 {
-                    content: "Test content 2",
+                    content: "Two-buck Chuck from trader joes!",
                     userId: 4,
                     questionId: 3,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
-                    content: "Test content 3",
-                    userId: 5,
+                    content: "Could you be more specific with your question?",
+                    userId: 11,
                     questionId: 4,
                     createdAt: new Date(),
                     updatedAt: new Date(),
