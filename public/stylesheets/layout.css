@@ -7,8 +7,6 @@ body {
     border-top: 3px solid #ed7a1c;
     border-bottom: 1px solid lightgray;
     display: block;
-    position: sticky;
-    top: 0;
     /* padding: 10px; */
 }
 
@@ -55,6 +53,7 @@ body {
     box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
     /* border: 1px solid transparent; */
     border-radius: 3px;
+    cursor: pointer;
     margin-right: auto;
     margin-left: 75px;
 }
@@ -63,7 +62,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* position: sticky; */
+    position: sticky;
     background-color: #fcfcfc;
     height: 47px;
     width: 99vw;
@@ -88,11 +87,9 @@ body {
 
 #navbar-right {
     display: flex;
-    justify-content: flex-end;
-    width: 266px;
+    width: auto;
     /* margin-left: 800px; */
 }
-
 
 #logo {
     height: 30px;
@@ -131,8 +128,7 @@ body {
 
 .searchbar-input-container {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex=start;
     align-items: flex-start;
     width: auto;
 }
