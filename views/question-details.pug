@@ -16,6 +16,7 @@ block content
             p#content-text #{question.content}
             .username-content-div
               .img-div
+                img(class='avatar' src=`${question.avatar}`)
               span.username-span= `${question.User.username}`
               .modified-div
               span.modified-span= `Created ${question.createdAtShort}`
@@ -39,6 +40,7 @@ block content
                   p(id=`${answer.id}-answer-text`) #{answer.content}
                   .username-content-div
                     .img-div
+                      img(class='avatar' src=`${answer.avatar}`)
                     span.username-span= `${answer.User.username}`
                     .modified-div
                     span.modified-span= `Created ${answer.createdAtShort}`
