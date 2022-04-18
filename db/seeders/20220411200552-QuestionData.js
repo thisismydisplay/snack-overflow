@@ -73,7 +73,7 @@ module.exports = {
                     content: ` Any suggestions?`,
                     userId: 48,
                     createdAt: new Date("December 16, 2021 13:06:24"),
-                    updatedAt: new Date("December 17, 2022 22:24"),
+                    updatedAt: new Date("December 17, 2021 22:24"),
                 },
                 {
                     title: "Where can I try memails?",
