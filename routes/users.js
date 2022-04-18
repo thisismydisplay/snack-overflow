@@ -17,7 +17,6 @@ router.get("/register", csrfProtection, (req, res) => {
 });
 
 const userValidators = [
-    // TODO Define the user validators.
     check("username")
         .exists({ checkFalsy: true })
         .withMessage("Please provide a value for username")
@@ -126,12 +125,11 @@ router.post(
     loginValidators,
     asyncHandler(async (req, res) => {
         const { email, password } = req.body;
-        // console.log(req.body);
         let errors = [];
         const validatorErrors = validationResult(req);
 
         if (validatorErrors.isEmpty()) {
-            // TODO Attempt to login the user.
+
 
             // Attempt to get the user by their email address.
             const user = await db.User.findOne({ where: { email } });

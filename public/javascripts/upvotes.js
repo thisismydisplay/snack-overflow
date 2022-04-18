@@ -2,6 +2,8 @@
 // const db = require("./db/models");
 // const Op = db.Sequelize.Op;
 
+//generate votes for seed data
+
 const questionVotes = (num, questId, vote) => {
 
 

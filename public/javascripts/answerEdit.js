@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
             );
             deleteBtn.classList.add("hidden");
 
-            // e.target.innerText = 'Cancel';
-
             const cancelBtn = document.createElement("button");
             cancelBtn.classList.add("edit-button");
             cancelBtn.innerText = "Cancel";
@@ -81,7 +79,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
                     // create elements with error message
                     const currentError = document.querySelector(".answererror");
                     currentError.classList.remove("hidden");
-                    // e.target.classList.remove("hidden") //?
 
                     currentError.innerHTML = data.message;
                 }

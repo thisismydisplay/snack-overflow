@@ -5,6 +5,8 @@ const Op = db.Sequelize.Op;
 
 const router = express.Router();
 
+// route for search results
+
 router.post('/', asyncHandler(async (req, res) => {
     console.log(req.body);
     const { content } = req.body;
@@ -20,7 +22,6 @@ router.post('/', asyncHandler(async (req, res) => {
             }
         }
     });
-    console.log("HELOOOOOOOOOO", questions);
     res.json(questions);
 }))
 
