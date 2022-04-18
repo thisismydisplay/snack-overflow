@@ -89,6 +89,7 @@ body {
 #navbar-right {
     display: flex;
     justify-content: flex-end;
+    /*adding comment to merge*/
     width: 266px;
     /* margin-left: 800px; */
 }
