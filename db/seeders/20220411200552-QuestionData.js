@@ -89,7 +89,7 @@ module.exports = {
                     content: `I've been craving some nice sweet tea recently. Any recommendations?`,
                     userId: 46,
                     createdAt: new Date("March 31, 2022 19:52:36"),
-                    updatedAt: randomDate(new Date(2018, 0, 1), new Date()),
+                    updatedAt: new Date(),
                 },
                 {
                     title: "Has anyone eaten fried mice before? Asking for a friend",
