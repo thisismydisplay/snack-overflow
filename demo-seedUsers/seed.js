@@ -26,4 +26,5 @@ function identification() {
     fs.writeFileSync(path.join(__dirname, '/userDatabase.json'), JSON.stringify(results));
 }
 
+userData(30)
 identification();
