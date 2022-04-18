@@ -18,7 +18,7 @@ block content
           .tags-div
           .username-content-div
             .img-div
-              img(class='avatar' src=`https://api.minimalavatars.com/avatar/random/png`)
+              img(class='avatar' src=`${question.avatar}`)
             span.username-span= `${question.User.username}`
             .modified-div
             span.updated-span= `Updated ${question.timeAgo}`

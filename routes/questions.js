@@ -32,46 +32,20 @@ function dateAdjustLogic(resource) {
     console.log(now);
 
     const adjustString = (type, string) => {
-        return `${type} ${string}${type > 1 ? "s" : ""} ago`
-    }
+        return `${type} ${string}${type > 1 ? "s" : ""} ago`;
+    };
     let diffTime = now.getTime() - updatedDate.getTime();
 
-    const days = Math.floor((diffTime / (1000 * 60 * 60 * 24)))
-    if (days) return adjustString(days, "day")
-    const hrs = Math.floor((diffTime / (1000 * 60 * 60)))
-    if (hrs) return adjustString(hrs, "hr")
-    const minutes = Math.floor((diffTime / (1000 * 60)))
-    if (minutes) return adjustString(minutes, "minute")
-    const seconds = Math.floor((diffTime / (1000)))
+    const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    if (days) return adjustString(days, "day");
+    const hrs = Math.floor(diffTime / (1000 * 60 * 60));
+    if (hrs) return adjustString(hrs, "hr");
+    const minutes = Math.floor(diffTime / (1000 * 60));
+    if (minutes) return adjustString(minutes, "minute");
+    const seconds = Math.floor(diffTime / 1000);
 
-    if (seconds) return adjustString(seconds, "second")
-    return "just now"
-
-
-    // return months >= 1
-    //     ? adjustString(months, "month")
-    //     : days >= 1
-    //     ? adjustString(days, "day")
-    //     : hrs >= 1
-    //     ? adjustString(hrs, "hr")
-    //     : minutes >= 1
-    //     ? adjustString(minutes, "minute")
-    //     : seconds >= 1
-    //     ? adjustString(seconds, "second")
-    //     : "just now"
-
-    // let daysAgo = now.getDay() - updatedDate.getDay();
-    // let hoursAgo = now.getHours() - updatedDate.getHours();
-    // let minutesAgo = now.getMinutes() - updatedDate.getMinutes();
-    // let secondsAgo = now.getSeconds() - updatedDate.getSeconds();
-
-    // if (daysAgo) resource.timeAgo = `${daysAgo} days ago`;
-    // else if (hoursAgo) resource.timeAgo = `${hoursAgo} hours ago`;
-    // else if (minutesAgo) resource.timeAgo = `${minutesAgo} minutes ago`;
-    // else if (secondsAgo) resource.timeAgo = `${secondsAgo} seconds ago`;
-    // else if (!daysAgo && !hoursAgo && !minutesAgo && !secondsAgo)
-    //     resource.timeAgo = "just now";
-    // else resource.timeAgo = "0 seconds ago";
+    if (seconds) return adjustString(seconds, "second");
+    return "just now";
 }
 function dateAdjust(resourcesObject) {
     //TO DO: DRY
@@ -159,7 +133,9 @@ router.get(
         //     else question.timeAgo = '0 seconds ago'
 
         // })
-
+        questions.forEach((question) => {
+            question.avatar = `https://api.minimalavatars.com/avatar/${question.User.username}/png`;
+        });
         console.log("vote collection ", voteCollection);
         res.render("questions", {
             title: "Top Questions",
@@ -284,7 +260,10 @@ router.get(
         // console.log(question.id);
         // if (res.locals.user.id == question.id) isQuestionUser = true;
         // console.log(isQuestionUser);
-
+        answers.forEach((answer) => {
+            answer.avatar = `https://api.minimalavatars.com/avatar/${answer.User.username}/png`;
+        });
+        question.avatar = `https://api.minimalavatars.com/avatar/${question.User.username}/png`;
         dateAdjust(answers);
         dateAdjust(question);
         res.render("question-details", {
