@@ -42,6 +42,3 @@ Checkout our [wiki](https://github.com/thisismydisplay/snack-overflow/wiki) to l
 [Dedition](https://github.com/Dedition)
 
 [haywood-d-johnson](https://github.com/haywood-d-johnson)
-
-
-
