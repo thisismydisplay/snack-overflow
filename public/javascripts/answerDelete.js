@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
             modifyAnswerBtns.forEach(button=>{
                 button.classList.add('hidden')
             })
-            // confirmModal.style.display = "block";
 
             const confirmBtn = confirmModal.querySelector(`.modal-confirm`);
             confirmBtn.addEventListener("click", async (e) => {
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
                     let answerVotes = answerVotesEle.innerText
                         .toString()
                         .split("")[0];
-                    // console.log(answerVotes)
                     let parsedAnswerVotes = parseInt(answerVotes, 10);
                     console.log(parsedAnswerVotes);
                     let updatedAnswerVotes = parsedAnswerVotes - 1;
