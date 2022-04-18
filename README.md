@@ -7,21 +7,31 @@ Snack Overflow is the best place on the web to learn about snacks. Sign-up to le
 ## Table Of Contents
 
 - [Description](#description)
+- [Getting Started](#getting-started)
 - [Technologies](#technologies)
-- [Plans](#plans)
 - [Contributors](#contributors)
 
 ## Description
 
 Snack Overflow Premium is a full-snack application to read and learn about all of your favorite snacks. A user will be able to read and post any inquiries as well as edit and delete their own.
 
+## Getting Started
+
+To run this project, download or clone from the terminal and run using npm:
+
+```
+cd snack-overflow
+npm install
+npm start
+```
+
+Checkout our [wiki](https://github.com/thisismydisplay/snack-overflow/wiki) to learn more about out routes and design.
+
 ## Technologies
 
 -   [PugJS](https://pugjs.org/api/getting-started.html)
 -   [Sequelize](https://sequelize.org/)
 -   [Express](https://expressjs.com/)
-
-## Plans
 
 ## Contributors
 
@@ -32,6 +42,3 @@ Snack Overflow Premium is a full-snack application to read and learn about all o
 [Dedition](https://github.com/Dedition)
 
 [haywood-d-johnson](https://github.com/haywood-d-johnson)
-
-
-
