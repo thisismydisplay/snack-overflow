@@ -18,6 +18,7 @@ block content
           .tags-div
           .username-content-div
             .img-div
+              img(class='avatar' src= `${getAvatar}`)
             span.username-span= `${question.User.username}`
             .modified-div
             span.updated-span= `Updated ${question.timeAgo}`
@@ -25,3 +26,4 @@ block content
 
   include includes/footer.pug
   script(src="/javascripts/votes-question-list.js")
+  script(src='/avatar.js')
